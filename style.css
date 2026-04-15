@@ -1,0 +1,77 @@
+:root {
+    --bg-color: #0f0c29;
+    --card-bg: #1a1a2e;
+    --accent-gradient: linear-gradient(135deg, #8e2de2, #f64f59);
+    --text-color: #e0e0e0;
+}
+
+body {
+    margin: 0;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    background: var(--bg-color);
+    color: var(--text-color);
+    min-height: 100vh;
+}
+
+header {
+    text-align: center;
+    padding: 50px 20px;
+    background: rgba(255, 255, 255, 0.03);
+}
+
+.logo {
+    font-size: 3rem;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    margin-bottom: 10px;
+}
+
+.container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 40px 20px;
+}
+
+.tool-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 25px;
+}
+
+.tool-card {
+    background: var(--card-bg);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    transition: all 0.3s ease;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
+
+.tool-card:hover {
+    transform: translateY(-10px);
+    border-color: #8e2de2;
+    box-shadow: 0 10px 30px rgba(142, 45, 226, 0.2);
+}
+
+.icon-box {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    background: var(--accent-gradient);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.tool-card h3 {
+    margin: 15px 0;
+    font-size: 1.4rem;
+}
+
+.tool-card p {
+    font-size: 0.9rem;
+    color: #a0a0a0;
+    line-height: 1.5;
+}
