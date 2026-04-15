@@ -2,97 +2,140 @@
 <html lang="tr">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Font Oluşturucu | itscovena</title>
-    <link rel="stylesheet" href="style.css"> <style>
-        /* Bu sayfaya özel ek stiller */
-        .tool-container {
-            max-width: 800px;
-            margin: 50px auto;
-            background: var(--card-bg);
-            padding: 30px;
-            border-radius: 20px;
-            border: 1px solid rgba(255, 255, 255, 0.1);
+    <title>itscovena | Pro Font Creator</title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://cdn.jsdelivr.net/npm/opentype.js@latest/dist/opentype.min.js"></script>
+    <style>
+        .creator-container { display: flex; gap: 20px; padding: 20px; }
+        .toolbar { 
+            width: 250px; background: var(--card-bg); padding: 20px; 
+            border-radius: 15px; border: 1px solid #8e2de2;
         }
-        input {
-            width: 100%;
-            padding: 15px;
-            background: #0f0c29;
-            border: 1px solid #8e2de2;
-            color: white;
-            border-radius: 10px;
-            font-size: 1.1rem;
-            margin-bottom: 30px;
+        canvas { 
+            background: white; border-radius: 10px; cursor: crosshair; 
+            box-shadow: 0 0 20px rgba(142, 45, 226, 0.3);
         }
-        .result-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 15px;
-            background: rgba(255,255,255,0.05);
-            margin-bottom: 10px;
-            border-radius: 8px;
+        .controls input, .controls select { width: 100%; margin: 10px 0; padding: 8px; }
+        .char-selector { 
+            display: grid; grid-template-columns: repeat(5, 1fr); gap: 5px; margin-top: 15px;
         }
-        .copy-btn {
-            background: var(--accent-gradient);
-            border: none;
-            color: white;
-            padding: 8px 15px;
-            border-radius: 5px;
-            cursor: pointer;
+        .char-btn { 
+            padding: 5px; background: #0f0c29; border: 1px solid #f64f59; 
+            color: white; cursor: pointer; text-align: center;
         }
-        .back-link {
-            color: #f64f59;
-            text-decoration: none;
-            display: inline-block;
-            margin-bottom: 20px;
+        .char-btn.active { background: #8e2de2; }
+        .action-btns { margin-top: 20px; }
+        button.primary { 
+            width: 100%; padding: 12px; background: var(--accent-gradient); 
+            border: none; color: white; border-radius: 5px; cursor: pointer; font-weight: bold;
         }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <a href="index.html" class="back-link">← Ana Sayfaya Dön</a>
-        <div class="tool-container">
-            <h2>Yazı Stili Oluşturucu</h2>
-            <p>Metnini yaz ve havalı fontlara dönüştür!</p>
-            <input type="text" id="userInput" placeholder="Buraya bir şeyler yaz..." oninput="generateFonts()">
-            
-            <div id="results">
+<div class="container">
+    <a href="index.html" style="color: #f64f59; text-decoration: none;">← Ana Sayfa</a>
+    <h1 class="logo" style="font-size: 2rem;">Font Studio</h1>
+
+    <div class="creator-container">
+        <div class="toolbar">
+            <div class="controls">
+                <label>Renk:</label>
+                <input type="color" id="colorPicker" value="#000000">
+                
+                <label>Kalınlık:</label>
+                <input type="range" id="lineWidth" min="1" max="20" value="5">
+                
+                <label>Alfabe:</label>
+                <select id="alphabet">
+                    <option value="latin">Latin (A-Z)</option>
+                    <option value="numbers">Rakamlar (0-9)</option>
+                    <option value="special">Özel Karakterler</option>
+                </select>
+            </div>
+
+            <div class="char-selector" id="charSelector">
                 </div>
+
+            <div class="action-btns">
+                <button class="primary" onclick="clearCanvas()">Temizle</button>
+                <br><br>
+                <button class="primary" style="background: #27ae60;" onclick="exportFont()">FONTU OLUŞTUR (.TTF)</button>
+            </div>
+        </div>
+
+        <div class="canvas-area">
+            <h3 id="currentLabel">Şu an çizilen: A</h3>
+            <canvas id="fontCanvas" width="500" height="500"></canvas>
+            <div class="guide" style="margin-top: 10px; font-size: 0.8rem; color: #a0a0a0;">
+                * Her harfi kutunun ortasına çizmeyi unutma.
+            </div>
         </div>
     </div>
+</div>
 
-    <script>
-        function generateFonts() {
-            const input = document.getElementById('userInput').value;
-            const resultsDiv = document.getElementById('results');
-            resultsDiv.innerHTML = '';
+<script>
+    const canvas = document.getElementById('fontCanvas');
+    const ctx = canvas.getContext('2d');
+    let drawing = false;
+    let glyphsData = {}; // Harf çizimlerini burada tutacağız
 
-            if(input.length === 0) return;
+    // Çizim Başlatma
+    canvas.addEventListener('mousedown', () => drawing = true);
+    canvas.addEventListener('mouseup', () => {
+        drawing = false;
+        ctx.beginPath();
+        saveCurrentGlyph(); // Çizimi kaydet
+    });
+    
+    canvas.addEventListener('mousemove', draw);
 
-            // Örnek birkaç stil (Daha fazla eklenebilir)
-            const styles = [
-                { name: 'Kalın', text: input.toUpperCase() },
-                { name: 'Tersten', text: input.split('').reverse().join('') },
-                { name: 'Aralıklı', text: input.split('').join(' ') },
-                { name: 'Kod Tipi', text: '`' + input + '`' }
-            ];
+    function draw(e) {
+        if (!drawing) return;
+        ctx.lineWidth = document.getElementById('lineWidth').value;
+        ctx.lineCap = 'round';
+        ctx.strokeStyle = document.getElementById('colorPicker').value;
 
-            styles.forEach(style => {
-                resultsDiv.innerHTML += `
-                    <div class="result-item">
-                        <span>${style.text}</span>
-                        <button class="copy-btn" onclick="copyText('${style.text}')">Kopyala</button>
-                    </div>
-                `;
-            });
-        }
+        const rect = canvas.getBoundingClientRect();
+        ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+        ctx.stroke();
+        ctx.beginPath();
+        ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+    }
 
-        function copyText(text) {
-            navigator.clipboard.writeText(text);
-            alert('Kopyalandı!');
-        }
-    </script>
+    function clearCanvas() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+
+    // Harfleri oluşturma
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ".split("");
+    const selector = document.getElementById('charSelector');
+    
+    alphabet.forEach(char => {
+        const btn = document.createElement('div');
+        btn.className = 'char-btn';
+        btn.innerText = char;
+        btn.onclick = () => selectChar(char, btn);
+        selector.appendChild(btn);
+    });
+
+    function selectChar(char, btn) {
+        document.querySelectorAll('.char-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('currentLabel').innerText = "Şu an çizilen: " + char;
+        clearCanvas();
+    }
+
+    function saveCurrentGlyph() {
+        // Burada çizimi SVG path'e çevirme kodu olacak (Opentype.js için)
+        console.log("Çizim kaydedildi.");
+    }
+
+    function exportFont() {
+        alert("Bu aşamada çizimlerin opentype.js ile .ttf dosyasına dönüştürülüyor. Bu işlem biraz zaman alabilir!");
+        // Gerçek dosya oluşturma mantığı buraya gelecek
+    }
+</script>
+
 </body>
 </html>
