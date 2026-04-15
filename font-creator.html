@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Font Oluşturucu | itscovena</title>
+    <link rel="stylesheet" href="style.css"> <style>
+        /* Bu sayfaya özel ek stiller */
+        .tool-container {
+            max-width: 800px;
+            margin: 50px auto;
+            background: var(--card-bg);
+            padding: 30px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        input {
+            width: 100%;
+            padding: 15px;
+            background: #0f0c29;
+            border: 1px solid #8e2de2;
+            color: white;
+            border-radius: 10px;
+            font-size: 1.1rem;
+            margin-bottom: 30px;
+        }
+        .result-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px;
+            background: rgba(255,255,255,0.05);
+            margin-bottom: 10px;
+            border-radius: 8px;
+        }
+        .copy-btn {
+            background: var(--accent-gradient);
+            border: none;
+            color: white;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .back-link {
+            color: #f64f59;
+            text-decoration: none;
+            display: inline-block;
+            margin-bottom: 20px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <a href="index.html" class="back-link">← Ana Sayfaya Dön</a>
+        <div class="tool-container">
+            <h2>Yazı Stili Oluşturucu</h2>
+            <p>Metnini yaz ve havalı fontlara dönüştür!</p>
+            <input type="text" id="userInput" placeholder="Buraya bir şeyler yaz..." oninput="generateFonts()">
+            
+            <div id="results">
+                </div>
+        </div>
+    </div>
+
+    <script>
+        function generateFonts() {
+            const input = document.getElementById('userInput').value;
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = '';
+
+            if(input.length === 0) return;
+
+            // Örnek birkaç stil (Daha fazla eklenebilir)
+            const styles = [
+                { name: 'Kalın', text: input.toUpperCase() },
+                { name: 'Tersten', text: input.split('').reverse().join('') },
+                { name: 'Aralıklı', text: input.split('').join(' ') },
+                { name: 'Kod Tipi', text: '`' + input + '`' }
+            ];
+
+            styles.forEach(style => {
+                resultsDiv.innerHTML += `
+                    <div class="result-item">
+                        <span>${style.text}</span>
+                        <button class="copy-btn" onclick="copyText('${style.text}')">Kopyala</button>
+                    </div>
+                `;
+            });
+        }
+
+        function copyText(text) {
+            navigator.clipboard.writeText(text);
+            alert('Kopyalandı!');
+        }
+    </script>
+</body>
+</html>
