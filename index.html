@@ -1,1 +1,47 @@
-<h1>Merhaba Dünya!</h1>
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>itscovena | All-in-One Tools</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <header>
+        <h1 class="logo">itscovena</h1>
+        <p>İhtiyacın olan tüm araçlar tek bir yerde.</p>
+    </header>
+
+    <main class="container">
+        <div class="tool-grid">
+            <div class="tool-card" onclick="location.href='font-creator.html'">
+                <div class="icon-box"><i class="fas fa-font"></i></div>
+                <h3>Font Oluşturucu</h3>
+                <p>Kendi yazı stilini tasarla ve dışa aktar.</p>
+            </div>
+
+            <div class="tool-card" onclick="location.href='converter.html'">
+                <div class="icon-box"><i class="fas fa-exchange-alt"></i></div>
+                <h3>Dosya Dönüştürücü</h3>
+                <p>Formatlar arası hızlı ve güvenli dönüşüm.</p>
+            </div>
+
+            <div class="tool-card" onclick="location.href='code-formatter.html'">
+                <div class="icon-box"><i class="fas fa-code"></i></div>
+                <h3>Kod Formatlayıcı</h3>
+                <p>Kodlarını daha okunabilir ve temiz hale getir.</p>
+            </div>
+
+            <div class="tool-card" onclick="location.href='json-gen.html'">
+                <div class="icon-box"><i class="fas fa-database"></i></div>
+                <h3>JSON Üretici</h3>
+                <p>Test projelerin için anında dummy veri oluştur.</p>
+            </div>
+        </div>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
