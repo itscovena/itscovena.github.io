@@ -1,47 +1,1369 @@
+```html
 <!DOCTYPE html>
-<html lang="tr">
+<html lang="tr" data-theme="mor">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>itscovena | All-in-One Tools</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lvp3016 | Proje ve Oyun Portalı</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Google Fonts: Plus Jakarta Sans -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+  
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+          },
+          colors: {
+            theme: {
+              accent: 'var(--accent)',
+              accentGlow: 'var(--accent-glow)',
+              bg: 'var(--bg-main)',
+              card: 'var(--bg-card)',
+              hover: 'var(--bg-hover)',
+              border: 'var(--border-color)',
+              text: 'var(--text-main)',
+              muted: 'var(--text-muted)'
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    /* Dynamic Theme Variables */
+    :root[data-theme="mor"] {
+      --bg-main: #0b0714;
+      --bg-card: #140d24;
+      --bg-hover: #1f1438;
+      --border-color: #351c5e;
+      --accent: #a855f7;
+      --accent-hover: #9333ea;
+      --accent-glow: rgba(168, 85, 247, 0.35);
+      --text-main: #f3e8ff;
+      --text-muted: #a78bfa;
+      --chat-bubble: #23133d;
+    }
+
+    :root[data-theme="mavi"] {
+      --bg-main: #060b14;
+      --bg-card: #0c1726;
+      --bg-hover: #14243b;
+      --border-color: #1e3a8a;
+      --accent: #3b82f6;
+      --accent-hover: #2563eb;
+      --accent-glow: rgba(59, 130, 246, 0.35);
+      --text-main: #eff6ff;
+      --text-muted: #93c5fd;
+      --chat-bubble: #112240;
+    }
+
+    :root[data-theme="siyah"] {
+      --bg-main: #09090b;
+      --bg-card: #18181b;
+      --bg-hover: #27272a;
+      --border-color: #3f3f46;
+      --accent: #e4e4e7;
+      --accent-hover: #ffffff;
+      --accent-glow: rgba(255, 255, 255, 0.2);
+      --text-main: #fafafa;
+      --text-muted: #a1a1aa;
+      --chat-bubble: #27272a;
+    }
+
+    :root[data-theme="beyaz"] {
+      --bg-main: #f8fafc;
+      --bg-card: #ffffff;
+      --bg-hover: #f1f5f9;
+      --border-color: #e2e8f0;
+      --accent: #6366f1;
+      --accent-hover: #4f46e5;
+      --accent-glow: rgba(99, 102, 241, 0.25);
+      --text-main: #0f172a;
+      --text-muted: #64748b;
+      --chat-bubble: #f1f5f9;
+    }
+
+    body {
+      background-color: var(--bg-main);
+      color: var(--text-main);
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      transition: background-color 0.4s ease, color 0.4s ease;
+    }
+
+    .theme-card {
+      background-color: var(--bg-card);
+      border: 1px solid var(--border-color);
+      transition: all 0.3s ease;
+    }
+
+    .theme-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 8px 30px var(--accent-glow);
+    }
+
+    .glow-effect {
+      box-shadow: 0 0 25px var(--accent-glow);
+    }
+
+    .accent-btn {
+      background-color: var(--accent);
+      color: #ffffff;
+      transition: all 0.2s ease;
+    }
+    :root[data-theme="siyah"] .accent-btn {
+      color: #000000;
+    }
+    .accent-btn:hover {
+      background-color: var(--accent-hover);
+      box-shadow: 0 0 15px var(--accent-glow);
+      transform: translateY(-1px);
+    }
+
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    ::-webkit-scrollbar-track {
+      background: var(--bg-main);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: var(--border-color);
+      border-radius: 9999px;
+    }
+    ::-webkit-scrollbar-thumb:hover {
+      background: var(--accent);
+    }
+  </style>
 </head>
-<body>
+<body class="min-h-screen flex flex-col justify-between selection:bg-purple-500 selection:text-white">
 
-    <header>
-        <h1 class="logo">itscovena</h1>
-        <p>İhtiyacın olan tüm araçlar tek bir yerde.</p>
-    </header>
-
-    <main class="container">
-        <div class="tool-grid">
-            <div class="tool-card" onclick="location.href='font-creator.html'">
-                <div class="icon-box"><i class="fas fa-font"></i></div>
-                <h3>Font Oluşturucu</h3>
-                <p>Kendi yazı stilini tasarla ve dışa aktar.</p>
-            </div>
-
-            <div class="tool-card" onclick="location.href='converter.html'">
-                <div class="icon-box"><i class="fas fa-exchange-alt"></i></div>
-                <h3>Dosya Dönüştürücü</h3>
-                <p>Formatlar arası hızlı ve güvenli dönüşüm.</p>
-            </div>
-
-            <div class="tool-card" onclick="location.href='code-formatter.html'">
-                <div class="icon-box"><i class="fas fa-code"></i></div>
-                <h3>Kod Formatlayıcı</h3>
-                <p>Kodlarını daha okunabilir ve temiz hale getir.</p>
-            </div>
-
-            <div class="tool-card" onclick="location.href='json-gen.html'">
-                <div class="icon-box"><i class="fas fa-database"></i></div>
-                <h3>JSON Üretici</h3>
-                <p>Test projelerin için anında dummy veri oluştur.</p>
-            </div>
+  <!-- HEADER & NAVIGATION -->
+  <header class="sticky top-0 z-50 backdrop-blur-md bg-opacity-80 border-b border-theme-border transition-colors duration-300" style="background-color: rgba(var(--bg-card), 0.85);">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-20">
+        
+        <!-- Brand Logo -->
+        <div class="flex items-center gap-3 cursor-pointer" onclick="switchTab('home')">
+          <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-500 flex items-center justify-center text-white font-extrabold text-xl shadow-lg glow-effect">
+            L
+          </div>
+          <div>
+            <span class="text-xl font-black tracking-wider uppercase text-theme-text">Lvp3016</span>
+            <span class="text-xs block text-theme-muted font-medium -mt-1">Proje & Oyun Portalı</span>
+          </div>
         </div>
-    </main>
 
-    <script src="script.js"></script>
+        <!-- Navigation Tabs (Desktop) -->
+        <nav class="hidden md:flex items-center gap-1 bg-theme-hover p-1.5 rounded-2xl border border-theme-border">
+          <button onclick="switchTab('home')" id="tab-btn-home" class="nav-tab px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2 text-theme-text">
+            <i class="fa-solid font-bold fa-house"></i> Ana Sayfa
+          </button>
+          <button onclick="switchTab('games')" id="tab-btn-games" class="nav-tab px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2 text-theme-muted hover:text-theme-text">
+            <i class="fa-solid fa-gamepad"></i> Oyunlar
+          </button>
+          <button onclick="switchTab('tools')" id="tab-btn-tools" class="nav-tab px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2 text-theme-muted hover:text-theme-text">
+            <i class="fa-solid fa-cube"></i> Minecraft Araçları
+          </button>
+          <button onclick="switchTab('chat')" id="tab-btn-chat" class="nav-tab px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 flex items-center gap-2 text-theme-muted hover:text-theme-text">
+            <i class="fa-solid fa-comments"></i> Forum / Chat
+          </button>
+        </nav>
+
+        <!-- Dynamic Theme Selector -->
+        <div class="flex items-center gap-3">
+          <div class="relative inline-block text-left">
+            <div class="flex items-center gap-1 bg-theme-hover p-1 rounded-xl border border-theme-border">
+              <button onclick="setTheme('mor')" title="Mor Tema" class="w-7 h-7 rounded-lg bg-purple-600 hover:scale-110 transition-transform flex items-center justify-center text-xs text-white shadow">
+                <i class="fa-solid fa-bolt text-[10px]"></i>
+              </button>
+              <button onclick="setTheme('mavi')" title="Mavi Tema" class="w-7 h-7 rounded-lg bg-blue-600 hover:scale-110 transition-transform flex items-center justify-center text-xs text-white shadow">
+                <i class="fa-solid fa-water text-[10px]"></i>
+              </button>
+              <button onclick="setTheme('siyah')" title="Siyah Tema" class="w-7 h-7 rounded-lg bg-zinc-900 border border-zinc-700 hover:scale-110 transition-transform flex items-center justify-center text-xs text-white shadow">
+                <i class="fa-solid fa-moon text-[10px]"></i>
+              </button>
+              <button onclick="setTheme('beyaz')" title="Beyaz Tema" class="w-7 h-7 rounded-lg bg-slate-100 border border-slate-300 hover:scale-110 transition-transform flex items-center justify-center text-xs text-slate-800 shadow">
+                <i class="fa-solid fa-sun text-[10px]"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Mobile Menu Toggle Button -->
+          <button onclick="toggleMobileMenu()" class="md:hidden p-2 rounded-xl bg-theme-hover text-theme-text border border-theme-border">
+            <i class="fa-solid fa-bars text-lg"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mobile Nav Menu -->
+    <div id="mobile-menu" class="hidden md:hidden border-b border-theme-border bg-theme-card px-4 pt-2 pb-4 space-y-2">
+      <button onclick="switchTab('home'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-xl font-medium text-theme-text bg-theme-hover flex items-center gap-3">
+        <i class="fa-solid fa-house text-purple-400"></i> Ana Sayfa
+      </button>
+      <button onclick="switchTab('games'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-xl font-medium text-theme-text hover:bg-theme-hover flex items-center gap-3">
+        <i class="fa-solid fa-gamepad text-blue-400"></i> Oyunlar
+      </button>
+      <button onclick="switchTab('tools'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-xl font-medium text-theme-text hover:bg-theme-hover flex items-center gap-3">
+        <i class="fa-solid fa-cube text-emerald-400"></i> Minecraft Araçları
+      </button>
+      <button onclick="switchTab('chat'); toggleMobileMenu()" class="w-full text-left px-4 py-3 rounded-xl font-medium text-theme-text hover:bg-theme-hover flex items-center gap-3">
+        <i class="fa-solid fa-comments text-amber-400"></i> Forum / Chat
+      </button>
+    </div>
+  </header>
+
+  <!-- MAIN CONTENT CONTAINER -->
+  <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 w-full">
+
+    <!-- ==================== TAB 1: ANA SAYFA ==================== -->
+    <section id="page-home" class="page-view space-y-10">
+      
+      <!-- Hero Banner -->
+      <div class="relative overflow-hidden rounded-3xl theme-card p-8 sm:p-12 text-center md:text-left flex flex-col md:flex-row items-center justify-between gap-8">
+        <div class="z-10 max-w-2xl space-y-4">
+          <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-semibold bg-purple-500/10 text-theme-muted border border-purple-500/20">
+            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Portala Hoş Geldiniz
+          </div>
+          <h1 class="text-3xl sm:text-5xl font-black tracking-tight leading-tight text-theme-text">
+            Lvp3016 <span class="bg-gradient-to-r from-purple-400 via-indigo-400 to-blue-400 bg-clip-text text-transparent">Dijital Evreni</span>
+          </h1>
+          <p class="text-theme-muted text-base sm:text-lg leading-relaxed">
+            Kendi geliştirdiğim bağımsız oyunları, Minecraft araçlarını ve topluluk sohbetini tek bir yerde topladığım resmi web sitem. İstediğin kategoriden keşfetmeye başla!
+          </p>
+          <div class="flex flex-wrap items-center justify-center md:justify-start gap-4 pt-2">
+            <button onclick="switchTab('games')" class="accent-btn px-6 py-3 rounded-xl font-bold text-sm flex items-center gap-2">
+              <i class="fa-solid fa-play"></i> Oyunları Keşfet
+            </button>
+            <button onclick="switchTab('chat')" class="px-6 py-3 rounded-xl font-bold text-sm bg-theme-hover text-theme-text border border-theme-border hover:border-purple-500 transition-all">
+              <i class="fa-solid fa-comments"></i> Topluluğa Katıl
+            </button>
+          </div>
+        </div>
+
+        <!-- Hero Graphic -->
+        <div class="relative w-full max-w-xs aspect-square flex items-center justify-center">
+          <div class="absolute inset-0 bg-gradient-to-tr from-purple-600/30 to-blue-600/30 rounded-full blur-3xl"></div>
+          <div class="relative w-48 h-48 rounded-3xl bg-theme-card border border-theme-border flex items-center justify-center shadow-2xl rotate-3 hover:rotate-0 transition-transform duration-500">
+            <i class="fa-solid fa-gamepad text-7xl text-purple-400 animate-bounce"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+        <div onclick="switchTab('games')" class="theme-card p-6 rounded-2xl cursor-pointer group hover:-translate-y-1 transition-all">
+          <div class="w-12 h-12 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-ghost"></i>
+          </div>
+          <h3 class="text-xl font-bold text-theme-text mb-2 flex items-center justify-between">
+            Oyunlar 
+            <i class="fa-solid fa-arrow-right text-xs opacity-0 group-hover:opacity-100 transition-opacity"></i>
+          </h3>
+          <p class="text-theme-muted text-sm leading-relaxed">
+            Tarayıcı üzerinden oynanabilir web oyunlarım ve yakında çıkacak projelerim.
+          </p>
+        </div>
+
+        <div onclick="switchTab('tools')" class="theme-card p-6 rounded-2xl cursor-pointer group hover:-translate-y-1 transition-all">
+          <div class="w-12 h-12 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-cubes"></i>
+          </div>
+          <h3 class="text-xl font-bold text-theme-text mb-2 flex items-center justify-between">
+            Minecraft Araçları
+            <i class="fa-solid fa-arrow-right text-xs opacity-0 group-hover:opacity-100 transition-opacity"></i>
+          </h3>
+          <p class="text-theme-muted text-sm leading-relaxed">
+            Komut oluşturucu, renk kodları tester'ı ve diğer Minecraft yardımcı toolları.
+          </p>
+        </div>
+
+        <div onclick="switchTab('chat')" class="theme-card p-6 rounded-2xl cursor-pointer group hover:-translate-y-1 transition-all">
+          <div class="w-12 h-12 rounded-xl bg-blue-500/10 text-blue-400 flex items-center justify-center text-xl mb-4 group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-message"></i>
+          </div>
+          <h3 class="text-xl font-bold text-theme-text mb-2 flex items-center justify-between">
+            Canlı Forum & Sohbet
+            <i class="fa-solid fa-arrow-right text-xs opacity-0 group-hover:opacity-100 transition-opacity"></i>
+          </h3>
+          <p class="text-theme-muted text-sm leading-relaxed">
+            Diğer oyuncularla fikir alışverişinde bulun, sorular sor ve sohbet et.
+          </p>
+        </div>
+      </div>
+
+      <div class="p-8 rounded-2xl border-2 border-dashed border-theme-border bg-theme-card/50 text-center space-y-3">
+        <div class="w-10 h-10 rounded-full bg-theme-hover text-theme-muted mx-auto flex items-center justify-center">
+          <i class="fa-solid fa-plus"></i>
+        </div>
+        <h4 class="text-lg font-bold text-theme-text">Gelecek Duyurular Ve İçerikler</h4>
+        <p class="text-theme-muted text-sm max-w-lg mx-auto">
+          Bu alan yeni duyurularınız, YouTube videolarınız veya öne çıkarmak istediğiniz özel haberler için ayrılmıştır.
+        </p>
+      </div>
+
+    </section>
+
+    <!-- ==================== TAB 2: OYUNLAR ==================== -->
+    <section id="page-games" class="page-view hidden space-y-8">
+      
+      <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-black text-theme-text">Oyun Kütüphanesi</h2>
+          <p class="text-theme-muted text-sm">Geliştirdiğim bağımsız oyunlar ve projeler.</p>
+        </div>
+        
+        <div class="flex items-center gap-2 overflow-x-auto pb-2 md:pb-0">
+          <button class="px-4 py-2 rounded-xl text-xs font-bold bg-purple-600 text-white">Tümü</button>
+          <button class="px-4 py-2 rounded-xl text-xs font-bold bg-theme-hover text-theme-muted border border-theme-border hover:text-theme-text">Web Oyunları</button>
+          <button class="px-4 py-2 rounded-xl text-xs font-bold bg-theme-hover text-theme-muted border border-theme-border hover:text-theme-text">Yakında</button>
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        
+        <div class="theme-card rounded-2xl overflow-hidden flex flex-col justify-between">
+          <div class="h-44 bg-gradient-to-tr from-purple-900 via-indigo-900 to-slate-900 p-6 flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute -right-4 -bottom-4 text-8xl text-purple-500/10 font-black">01</div>
+            <span class="self-start px-2.5 py-1 rounded-md text-[10px] font-extrabold uppercase bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">Oynanabilir</span>
+            <div class="z-10">
+              <h3 class="text-xl font-bold text-white">Pixel Runner 2D</h3>
+              <p class="text-xs text-purple-200">Engellerden kaçış ve skor oyunu</p>
+            </div>
+          </div>
+          <div class="p-6 space-y-4 flex-1 flex flex-col justify-between">
+            <p class="text-theme-muted text-sm">
+              Engelleri aşarak en yüksek skoru yapmaya çalıştığınız hızlı tempolu 2D platform koşu oyunu.
+            </p>
+            <div class="pt-2 flex items-center justify-between">
+              <span class="text-xs text-theme-muted font-medium"><i class="fa-solid fa-code text-purple-400"></i> HTML5 Canvas</span>
+              <button onclick="openDemoGameModal('Pixel Runner')" class="accent-btn px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5">
+                <i class="fa-solid fa-play"></i> Oyna
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="theme-card rounded-2xl overflow-hidden flex flex-col justify-between">
+          <div class="h-44 bg-gradient-to-tr from-blue-900 via-sky-900 to-slate-900 p-6 flex flex-col justify-between relative overflow-hidden">
+            <div class="absolute -right-4 -bottom-4 text-8xl text-blue-500/10 font-black">02</div>
+            <span class="self-start px-2.5 py-1 rounded-md text-[10px] font-extrabold uppercase bg-blue-500/20 text-blue-400 border border-blue-500/30">Geliştiriliyor</span>
+            <div class="z-10">
+              <h3 class="text-xl font-bold text-white">Block Quest 3D</h3>
+              <p class="text-xs text-blue-200">Voksel macera oyunu</p>
+            </div>
+          </div>
+          <div class="p-6 space-y-4 flex-1 flex flex-col justify-between">
+            <p class="text-theme-muted text-sm">
+              Minecraft evreninden ilham alan üç boyutlu zindan ve macera deneyimi.
+            </p>
+            <div class="pt-2 flex items-center justify-between">
+              <span class="text-xs text-theme-muted font-medium"><i class="fa-solid fa-cube text-blue-400"></i> Three.js</span>
+              <button disabled class="px-4 py-2 rounded-xl text-xs font-bold bg-theme-hover text-theme-muted border border-theme-border opacity-70 cursor-not-allowed">
+                Yakında
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="theme-card rounded-2xl border-2 border-dashed border-theme-border p-6 flex flex-col items-center justify-center text-center space-y-3 min-h-[300px]">
+          <div class="w-12 h-12 rounded-full bg-theme-hover text-theme-muted flex items-center justify-center text-lg">
+            <i class="fa-solid fa-plus"></i>
+          </div>
+          <h4 class="text-base font-bold text-theme-text">Yeni Proje Ekle</h4>
+          <p class="text-theme-muted text-xs max-w-xs">
+            Buraya geliştirdiğin yeni bir oyunu veya projeyi kart olarak ekleyebilirsin.
+          </p>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ==================== TAB 3: MINECRAFT ARAÇLARI ==================== -->
+    <section id="page-tools" class="page-view hidden space-y-8">
+      
+      <div>
+        <h2 class="text-2xl sm:text-3xl font-black text-theme-text">Minecraft Araç Kutusu</h2>
+        <p class="text-theme-muted text-sm">Oyuncular ve sunucu yöneticileri için faydalı web araçları.</p>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+        
+        <div class="theme-card p-6 rounded-2xl space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-emerald-500/10 text-emerald-400 flex items-center justify-center font-bold">
+              <i class="fa-solid fa-palette"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-theme-text">Renk Kodu Metin Testi</h3>
+              <p class="text-xs text-theme-muted">Minecraft sohbet ve MOTD renk formatı</p>
+            </div>
+          </div>
+
+          <div class="space-y-3">
+            <label class="block text-xs font-semibold text-theme-muted">Metin Girin (&amp; Kodları Desteklenir):</label>
+            <input type="text" id="mc-text-input" value="&amp;aMerhaba &amp;bLvp3016 &amp;cMinecraft!" oninput="updateMcColorPreview()" class="w-full px-4 py-2.5 rounded-xl bg-theme-hover border border-theme-border text-theme-text focus:outline-none focus:border-purple-500 text-sm">
+            
+            <div class="p-4 rounded-xl bg-black border border-zinc-800 font-mono text-sm min-h-[60px] flex items-center" id="mc-text-output">
+              <!-- Rendered colored text preview -->
+            </div>
+
+            <div class="flex flex-wrap gap-1.5 text-xs pt-2">
+              <span class="px-2 py-1 rounded bg-red-600 text-white cursor-pointer font-bold" onclick="insertColorCode('&amp;c')">&amp;c Kırmızı</span>
+              <span class="px-2 py-1 rounded bg-green-500 text-white cursor-pointer font-bold" onclick="insertColorCode('&amp;a')">&amp;a Yeşil</span>
+              <span class="px-2 py-1 rounded bg-cyan-400 text-black cursor-pointer font-bold" onclick="insertColorCode('&amp;b')">&amp;b Açık Mavi</span>
+              <span class="px-2 py-1 rounded bg-yellow-400 text-black cursor-pointer font-bold" onclick="insertColorCode('&amp;e')">&amp;e Sarı</span>
+              <span class="px-2 py-1 rounded bg-purple-500 text-white cursor-pointer font-bold" onclick="insertColorCode('&amp;d')">&amp;d Pembe</span>
+              <span class="px-2 py-1 rounded bg-white text-black cursor-pointer font-bold" onclick="insertColorCode('&amp;f')">&amp;f Beyaz</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="theme-card p-6 rounded-2xl space-y-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-xl bg-purple-500/10 text-purple-400 flex items-center justify-center font-bold">
+              <i class="fa-solid fa-terminal"></i>
+            </div>
+            <div>
+              <h3 class="text-lg font-bold text-theme-text">/give Komut Oluşturucu</h3>
+              <p class="text-xs text-theme-muted">Tek tıkla özel eşya komutu üret</p>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 gap-3">
+            <div>
+              <label class="block text-xs font-semibold text-theme-muted mb-1">Eşya Tipi:</label>
+              <select id="cmd-item" onchange="generateMcCommand()" class="w-full px-3 py-2 rounded-xl bg-theme-hover border border-theme-border text-theme-text text-sm focus:outline-none">
+                <option value="diamond_sword">Diamond Sword</option>
+                <option value="netherite_pickaxe">Netherite Pickaxe</option>
+                <option value="golden_apple">Enchanted Golden Apple</option>
+                <option value="elytra">Elytra</option>
+              </select>
+            </div>
+            <div>
+              <label class="block text-xs font-semibold text-theme-muted mb-1">Miktar:</label>
+              <input type="number" id="cmd-amount" value="1" min="1" max="64" oninput="generateMcCommand()" class="w-full px-3 py-2 rounded-xl bg-theme-hover border border-theme-border text-theme-text text-sm focus:outline-none">
+            </div>
+          </div>
+
+          <div class="space-y-2">
+            <label class="block text-xs font-semibold text-theme-muted">Oluşturulan Komut:</label>
+            <div class="flex gap-2">
+              <input type="text" id="cmd-output" readonly class="flex-1 px-3 py-2 rounded-xl bg-black border border-zinc-800 text-emerald-400 font-mono text-xs focus:outline-none">
+              <button onclick="copyCommand()" class="accent-btn px-4 py-2 rounded-xl text-xs font-bold">Kopyala</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- ==================== TAB 4: SOHBET & FORUM ==================== -->
+    <section id="page-chat" class="page-view hidden space-y-6">
+      
+      <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div>
+          <h2 class="text-2xl sm:text-3xl font-black text-theme-text flex items-center gap-3">
+            Topluluk Forumu &amp; Canlı DM
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-ping"></span>
+          </h2>
+          <p class="text-theme-muted text-sm">Kanallar arasında geçiş yapın veya kullanıcı adına doğrudan özel mesaj (DM) sekmesi açın.</p>
+        </div>
+
+        <div id="user-auth-bar" class="flex items-center gap-3 bg-theme-card p-2 px-4 rounded-2xl border border-theme-border">
+          <!-- Auth Status Bar -->
+        </div>
+      </div>
+
+      <div class="grid grid-cols-1 lg:grid-cols-4 gap-6 h-[600px]">
+        
+        <div class="theme-card rounded-2xl p-4 hidden lg:flex flex-col justify-between overflow-y-auto">
+          <div class="space-y-5">
+            <div>
+              <h4 class="text-xs font-bold uppercase text-theme-muted tracking-wider px-2 mb-2">Genel Kanallar</h4>
+              <div class="space-y-1">
+                <button onclick="selectChannel('genel')" id="chan-btn-genel" class="channel-btn w-full text-left px-3 py-2 rounded-xl text-xs font-semibold flex items-center justify-between bg-purple-500/20 text-purple-300 border border-purple-500/30">
+                  <span><i class="fa-solid fa-hashtag mr-1.5"></i> genel-sohbet</span>
+                  <span class="w-2 h-2 rounded-full bg-emerald-400"></span>
+                </button>
+                <button onclick="selectChannel('oyunlar')" id="chan-btn-oyunlar" class="channel-btn w-full text-left px-3 py-2 rounded-xl text-xs font-semibold flex items-center justify-between text-theme-muted hover:bg-theme-hover hover:text-theme-text">
+                  <span><i class="fa-solid fa-hashtag mr-1.5"></i> oyun-tartisma</span>
+                </button>
+                <button onclick="selectChannel('minecraft')" id="chan-btn-minecraft" class="channel-btn w-full text-left px-3 py-2 rounded-xl text-xs font-semibold flex items-center justify-between text-theme-muted hover:bg-theme-hover hover:text-theme-text">
+                  <span><i class="fa-solid fa-hashtag mr-1.5"></i> minecraft-yardim</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="pt-3 border-t border-theme-border space-y-2">
+              <div class="flex items-center justify-between px-2">
+                <h4 class="text-xs font-bold uppercase text-theme-muted tracking-wider">Aktif DM'ler</h4>
+                <button onclick="openNewDmModal()" class="px-2 py-1 bg-purple-600 hover:bg-purple-500 text-white rounded-lg text-[11px] font-bold transition-all shadow" title="Yeni DM Başlat">
+                  <i class="fa-solid fa-plus text-[9px] mr-1"></i> DM
+                </button>
+              </div>
+              <div id="dm-threads-list" class="space-y-1 text-xs">
+                <!-- DM Threads list -->
+                <p class="text-[11px] text-theme-muted px-2 py-1">Henüz özel mesajınız yok.</p>
+              </div>
+            </div>
+          </div>
+
+          <div class="p-3 rounded-xl bg-theme-hover border border-theme-border text-center space-y-1 mt-4">
+            <p class="text-[11px] text-theme-muted">Anlık Realtime Database (RTDB)</p>
+            <p class="text-xs font-bold text-emerald-400 flex items-center justify-center gap-1">
+              <i class="fa-solid fa-circle text-[8px]"></i> lvp3016site-default-rtdb
+            </p>
+          </div>
+        </div>
+
+        <div class="lg:col-span-3 theme-card rounded-2xl p-4 flex flex-col justify-between h-full">
+          
+          <div class="pb-3 border-b border-theme-border space-y-2">
+            <div class="flex items-center justify-between">
+              <div class="flex items-center gap-2">
+                <span id="active-channel-icon" class="text-purple-400 text-base"><i class="fa-solid fa-hashtag"></i></span>
+                <span id="active-channel-title" class="text-base font-extrabold text-theme-text">genel-sohbet</span>
+                <span id="dm-status-badge" class="text-[10px] px-2 py-0.5 rounded-full bg-purple-500/20 text-purple-300 border border-purple-500/30 font-semibold hidden">Özel DM Sekmesi</span>
+              </div>
+              
+              <button onclick="openNewDmModal()" class="accent-btn px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1.5">
+                <i class="fa-solid fa-paper-plane text-[10px]"></i>
+                <span>Kullanıcıya DM At</span>
+              </button>
+            </div>
+
+            <div id="chat-tabs-bar" class="flex items-center gap-2 overflow-x-auto pt-1 pb-1 text-xs">
+              <!-- Rendered via JS -->
+            </div>
+          </div>
+
+          <div id="chat-messages-container" class="flex-1 overflow-y-auto space-y-3 pr-2 my-2">
+            <!-- Messages render area -->
+          </div>
+
+          <form onsubmit="handleSendChatMessage(event); return false;" class="pt-3 border-t border-theme-border flex items-center gap-2">
+            <input type="text" id="chat-input-message" placeholder="Mesajınızı yazın..." required autocomplete="off" class="flex-1 px-4 py-3 rounded-xl bg-theme-hover border border-theme-border text-theme-text text-sm focus:outline-none focus:border-purple-500">
+            <button type="submit" class="accent-btn px-5 py-3 rounded-xl font-bold text-sm flex items-center gap-2">
+              <span>Gönder</span>
+              <i class="fa-solid fa-paper-plane text-xs"></i>
+            </button>
+          </form>
+
+        </div>
+
+      </div>
+
+    </section>
+
+    <!-- AUTH MODAL -->
+    <div id="auth-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+      <div class="theme-card max-w-md w-full rounded-3xl p-6 space-y-5 border border-theme-border relative">
+        <button onclick="closeAuthModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-theme-hover text-theme-text flex items-center justify-center">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        
+        <div>
+          <h3 class="text-xl font-bold text-theme-text" id="auth-modal-title">Hesap Oluştur / Giriş Yap</h3>
+          <p class="text-xs text-theme-muted mt-1">Özel mesaj (DM) göndermek için bir kullanıcı adı ve PIN belirleyin.</p>
+        </div>
+
+        <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-theme-muted mb-1">Kullanıcı Adı (Rumuz):</label>
+            <input type="text" id="auth-username" placeholder="Örn: Ahmet3016" required minlength="3" maxlength="20" class="w-full px-4 py-2.5 rounded-xl bg-theme-hover border border-theme-border text-theme-text text-sm focus:outline-none focus:border-purple-500">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-theme-muted mb-1">4 Haneli Güvenlik PIN Kodu:</label>
+            <input type="password" id="auth-pin" placeholder="****" maxlength="6" required class="w-full px-4 py-2.5 rounded-xl bg-theme-hover border border-theme-border text-theme-text text-sm focus:outline-none focus:border-purple-500">
+          </div>
+          <div id="auth-error-msg" class="text-xs text-red-400 hidden font-medium"></div>
+
+          <button type="submit" class="accent-btn w-full py-3 rounded-xl font-bold text-sm">Giriş Yap / Kaydol</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- NEW DM MODAL -->
+    <div id="new-dm-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+      <div class="theme-card max-w-md w-full rounded-3xl p-6 space-y-5 border border-theme-border relative">
+        <button onclick="closeNewDmModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-theme-hover text-theme-text flex items-center justify-center">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        
+        <div>
+          <h3 class="text-xl font-bold text-theme-text">Yeni DM Başlat</h3>
+          <p class="text-xs text-theme-muted mt-1">Mesaj göndermek istediğiniz kullanıcının adını yazın.</p>
+        </div>
+
+        <form onsubmit="handleStartNewDm(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-theme-muted mb-1">Alıcı Kullanıcı Adı:</label>
+            <input type="text" id="dm-target-username" placeholder="Örn: Mehmet_99" required class="w-full px-4 py-2.5 rounded-xl bg-theme-hover border border-theme-border text-theme-text text-sm focus:outline-none focus:border-purple-500">
+          </div>
+          <div id="dm-error-msg" class="text-xs text-red-400 hidden font-medium"></div>
+          <button type="submit" class="accent-btn w-full py-3 rounded-xl font-bold text-sm">Sohbeti Başlat</button>
+        </form>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- DEMO GAME MODAL -->
+  <div id="game-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="theme-card max-w-xl w-full rounded-3xl p-6 space-y-4 border border-theme-border relative">
+      <button onclick="closeGameModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-theme-hover text-theme-text flex items-center justify-center">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+      <h3 class="text-xl font-bold text-theme-text" id="modal-game-title">Pixel Runner 2D</h3>
+      
+      <div class="w-full h-64 bg-slate-900 rounded-2xl relative overflow-hidden flex flex-col items-center justify-center border border-zinc-700">
+        <canvas id="mini-game-canvas" width="400" height="200" class="w-full h-full"></canvas>
+      </div>
+
+      <div class="flex items-center justify-between text-xs text-theme-muted">
+        <span>Kontrol: Zıplamak için <kbd class="px-2 py-1 bg-theme-hover rounded border border-theme-border text-theme-text">BOŞLUK</kbd> veya ekrana tıkla</span>
+        <button onclick="startMiniGame()" class="accent-btn px-4 py-2 rounded-xl font-bold text-xs">Yeniden Başlat</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- FOOTER -->
+  <footer class="border-t border-theme-border py-6 mt-12 bg-theme-card/30">
+    <div class="max-w-7xl mx-auto px-4 text-center sm:flex sm:justify-between sm:text-left text-xs text-theme-muted">
+      <p>© 2026 Lvp3016 Portal. Tüm hakları saklıdır.</p>
+      <p class="mt-2 sm:mt-0">GitHub Pages ile uyumlu statik portal şablonu</p>
+    </div>
+  </footer>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-app.js";
+    import { getAuth, signInAnonymously, signInWithCustomToken } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-auth.js";
+    import { getDatabase, ref, push, set, onValue } from "https://www.gstatic.com/firebasejs/11.6.1/firebase-database.js";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBZ8TrP5-GlbRbPaKSTVDXcbhd9LWYyzWM",
+      authDomain: "lvp3016site.firebaseapp.com",
+      databaseURL: "https://lvp3016site-default-rtdb.firebaseio.com",
+      projectId: "lvp3016site",
+      storageBucket: "lvp3016site.firebasestorage.app",
+      messagingSenderId: "1029328432877",
+      appId: "1:1029328432877:web:75489f4d77ed637412a6e4",
+      measurementId: "G-Q2887Y7ERN"
+    };
+
+    let app, auth, db;
+    try {
+      app = initializeApp(firebaseConfig);
+      auth = getAuth(app);
+      db = getDatabase(app);
+      console.log("Firebase Lvp3016 projesine başarıyla bağlandı!");
+    } catch (e) {
+      console.warn("Firebase bağlantı hatası:", e);
+    }
+
+    let currentChannel = 'genel';
+    let activeDmTarget = null;
+    let openDmTabs = new Set();
+    let registeredUsers = {};
+
+    let accountProfile = JSON.parse(localStorage.getItem('lvp_account') || 'null');
+
+    let allPublicMessages = JSON.parse(localStorage.getItem('lvp_public_messages') || 'null');
+    if (!allPublicMessages || allPublicMessages.length === 0) {
+      allPublicMessages = [
+        { id: '1', username: 'Lvp3016', text: 'Portala ve sohbet odasına hoş geldiniz! İster kanallardan yazışın, ister DM atın.', channel: 'genel', timestamp: Date.now() - 3600000 },
+        { id: '2', username: 'Gramer_TR', text: 'Pixel Runner oyunu çok güzel olmuş, tebrikler!', channel: 'genel', timestamp: Date.now() - 1800000 }
+      ];
+      localStorage.setItem('lvp_public_messages', JSON.stringify(allPublicMessages));
+    }
+
+    let allDmMessages = JSON.parse(localStorage.getItem('lvp_dm_messages') || '[]');
+
+    window.refreshChatUI = function() {
+      renderChatTabsBar();
+      renderDmThreads();
+      if (activeDmTarget) {
+        renderDmMessages();
+      } else {
+        renderMessages(allPublicMessages);
+      }
+    };
+
+    function renderChatTabsBar() {
+      const tabsBar = document.getElementById('chat-tabs-bar');
+      if (!tabsBar) return;
+
+      let html = '';
+      const channels = [
+        { id: 'genel', name: '# genel' },
+        { id: 'oyunlar', name: '# oyunlar' },
+        { id: 'minecraft', name: '# minecraft' }
+      ];
+
+      channels.forEach(ch => {
+        const isActive = !activeDmTarget && currentChannel === ch.id;
+        html += `
+          <button type="button" onclick="selectChannel('${ch.id}')" class="px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${isActive ? 'bg-purple-600 text-white shadow' : 'bg-theme-hover text-theme-muted hover:text-theme-text'}">
+            ${ch.name}
+          </button>
+        `;
+      });
+
+      openDmTabs.forEach(target => {
+        const isActive = activeDmTarget && activeDmTarget.toLowerCase() === target.toLowerCase();
+        html += `
+          <div class="inline-flex items-center gap-1 px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all ${isActive ? 'bg-indigo-600 text-white shadow' : 'bg-theme-hover text-theme-muted hover:text-theme-text'}">
+            <button type="button" onclick="selectDmUser('${escapeHtml(target)}')">
+              <i class="fa-solid fa-user-lock text-[10px] mr-1"></i> ${escapeHtml(target)}
+            </button>
+            <button type="button" onclick="closeDmTab('${escapeHtml(target)}')" class="hover:text-red-300 ml-1">
+              <i class="fa-solid fa-xmark text-[10px]"></i>
+            </button>
+          </div>
+        `;
+      });
+
+      tabsBar.innerHTML = html;
+    }
+
+    window.closeDmTab = function(username) {
+      openDmTabs.delete(username);
+      if (activeDmTarget && activeDmTarget.toLowerCase() === username.toLowerCase()) {
+        selectChannel('genel');
+      } else {
+        renderChatTabsBar();
+      }
+    };
+
+    window.selectDmUser = function(username) {
+      activeDmTarget = username;
+      currentChannel = null;
+      openDmTabs.add(username);
+
+      const titleElem = document.getElementById('active-channel-title');
+      const iconElem = document.getElementById('active-channel-icon');
+      if (titleElem) titleElem.innerText = `@${username}`;
+      if (iconElem) iconElem.innerHTML = `<i class="fa-solid fa-user-lock"></i>`;
+
+      const badge = document.getElementById('dm-status-badge');
+      if (badge) badge.classList.remove('hidden');
+
+      document.querySelectorAll('.channel-btn').forEach(btn => {
+        btn.className = "channel-btn w-full text-left px-3 py-2 rounded-xl text-xs font-semibold flex items-center justify-between text-theme-muted hover:bg-theme-hover hover:text-theme-text";
+      });
+
+      renderChatTabsBar();
+      renderDmThreads();
+      renderDmMessages();
+    };
+
+    window.selectChannel = function(channelName) {
+      currentChannel = channelName;
+      activeDmTarget = null;
+
+      const titleElem = document.getElementById('active-channel-title');
+      const iconElem = document.getElementById('active-channel-icon');
+      if (titleElem) titleElem.innerText = `${channelName}-sohbet`;
+      if (iconElem) iconElem.innerHTML = `<i class="fa-solid fa-hashtag"></i>`;
+
+      const badge = document.getElementById('dm-status-badge');
+      if (badge) badge.classList.add('hidden');
+
+      document.querySelectorAll('.channel-btn').forEach(btn => {
+        btn.className = "channel-btn w-full text-left px-3 py-2 rounded-xl text-xs font-semibold flex items-center justify-between text-theme-muted hover:bg-theme-hover hover:text-theme-text";
+      });
+
+      const activeBtn = document.getElementById(`chan-btn-${channelName}`);
+      if (activeBtn) {
+        activeBtn.className = "channel-btn w-full text-left px-3 py-2 rounded-xl text-xs font-semibold flex items-center justify-between bg-purple-500/20 text-purple-300 border border-purple-500/30";
+      }
+
+      renderChatTabsBar();
+      renderDmThreads();
+      renderMessages(allPublicMessages);
+    };
+
+    function renderDmThreads() {
+      const threadContainer = document.getElementById('dm-threads-list');
+      if (!threadContainer) return;
+
+      if (!accountProfile) {
+        threadContainer.innerHTML = `<p class="text-[11px] text-theme-muted px-2 py-1">Giriş yapıldığında aktif DM'ler görünür.</p>`;
+        return;
+      }
+
+      const myUser = accountProfile.username.toLowerCase();
+      const partners = new Set(openDmTabs);
+
+      allDmMessages.forEach(m => {
+        const from = (m.from || '').toLowerCase();
+        const to = (m.to || '').toLowerCase();
+        if (from === myUser && to) partners.add(m.to);
+        if (to === myUser && from) partners.add(m.from);
+      });
+
+      if (partners.size === 0) {
+        threadContainer.innerHTML = `<p class="text-[11px] text-theme-muted px-2 py-1">Henüz özel mesajınız yok.</p>`;
+        return;
+      }
+
+      threadContainer.innerHTML = Array.from(partners).map(partner => {
+        const isActive = activeDmTarget && activeDmTarget.toLowerCase() === partner.toLowerCase();
+        return `
+          <button type="button" onclick="selectDmUser('${escapeHtml(partner)}')" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold flex items-center justify-between ${isActive ? 'bg-purple-500/20 text-purple-300 border border-purple-500/30' : 'text-theme-muted hover:bg-theme-hover hover:text-theme-text'}">
+            <span class="truncate"><i class="fa-solid fa-user-lock mr-1.5 text-[10px]"></i> ${escapeHtml(partner)}</span>
+            <span class="w-2 h-2 rounded-full bg-blue-400 shrink-0"></span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    window.handleStartNewDm = function(e) {
+      if (e) e.preventDefault();
+      const targetInput = document.getElementById('dm-target-username').value.trim();
+      const dmErr = document.getElementById('dm-error-msg');
+      if (dmErr) dmErr.classList.add('hidden');
+
+      if (!targetInput) return;
+
+      if (!accountProfile) {
+        closeNewDmModal();
+        openAuthModal();
+        return;
+      }
+
+      if (accountProfile && targetInput.toLowerCase() === accountProfile.username.toLowerCase()) {
+        if (dmErr) {
+          dmErr.innerText = "Kendinize özel mesaj gönderemezsiniz.";
+          dmErr.classList.remove('hidden');
+        }
+        return;
+      }
+
+      closeNewDmModal();
+      selectDmUser(targetInput);
+    };
+
+    function initAuth() {
+      renderUserAuthBar();
+      window.refreshChatUI();
+
+      if (auth) {
+        if (typeof __initial_auth_token !== 'undefined' && __initial_auth_token) {
+          signInWithCustomToken(auth, __initial_auth_token).catch(err => console.warn("Token auth notice:", err));
+        } else {
+          signInAnonymously(auth).catch(err => console.warn("Anon auth notice:", err));
+        }
+      }
+
+      setupRealtimeChat();
+      setupRealtimeDms();
+      setupUserProfilesListener();
+    }
+
+    function renderUserAuthBar() {
+      const bar = document.getElementById('user-auth-bar');
+      if (!bar) return;
+
+      if (accountProfile) {
+        bar.innerHTML = `
+          <div class="flex items-center gap-2">
+            <div class="w-7 h-7 rounded-lg bg-purple-600 text-white font-extrabold text-xs flex items-center justify-center">
+              ${accountProfile.username.charAt(0).toUpperCase()}
+            </div>
+            <span class="text-xs font-bold text-theme-text">${escapeHtml(accountProfile.username)}</span>
+            <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-semibold">Giriş Yapıldı</span>
+          </div>
+          <button type="button" onclick="handleLogout()" class="text-xs text-theme-muted hover:text-red-400 transition-colors ml-2" title="Çıkış Yap">
+            <i class="fa-solid fa-right-from-bracket"></i>
+          </button>
+        `;
+      } else {
+        bar.innerHTML = `
+          <i class="fa-solid fa-user-lock text-theme-muted text-xs"></i>
+          <span class="text-xs text-theme-muted hidden sm:inline">DM Göndermek İçin:</span>
+          <button type="button" onclick="openAuthModal()" class="accent-btn px-3 py-1.5 rounded-xl text-xs font-bold flex items-center gap-1">
+            <i class="fa-solid fa-user-plus text-[10px]"></i> Kaydol / Giriş Yap
+          </button>
+        `;
+      }
+    }
+
+    window.openAuthModal = function() {
+      document.getElementById('auth-modal').classList.remove('hidden');
+    };
+    window.closeAuthModal = function() {
+      document.getElementById('auth-modal').classList.add('hidden');
+    };
+    window.openNewDmModal = function() {
+      if (!accountProfile) {
+        openAuthModal();
+        return;
+      }
+      document.getElementById('new-dm-modal').classList.remove('hidden');
+    };
+    window.closeNewDmModal = function() {
+      document.getElementById('new-dm-modal').classList.add('hidden');
+    };
+
+    window.handleAuthSubmit = async function(e) {
+      if (e) e.preventDefault();
+      const usernameInput = document.getElementById('auth-username').value.trim();
+      const pinInput = document.getElementById('auth-pin').value.trim();
+      const errBox = document.getElementById('auth-error-msg');
+
+      if (!usernameInput || !pinInput) return;
+
+      const lowerName = usernameInput.toLowerCase();
+      
+      if (registeredUsers[lowerName]) {
+        if (registeredUsers[lowerName].pin !== pinInput) {
+          errBox.innerText = "Bu kullanıcı adı alınmış ve PIN hatalı!";
+          errBox.classList.remove('hidden');
+          return;
+        }
+      } else {
+        try {
+          if (db) {
+            const userRef = ref(db, `portal_users/${lowerName}`);
+            await set(userRef, {
+              username: usernameInput,
+              usernameLower: lowerName,
+              pin: pinInput,
+              createdAt: Date.now()
+            });
+          }
+        } catch (err) {
+          console.error("Error registering user in RTDB:", err);
+        }
+      }
+
+      accountProfile = { username: usernameInput, pin: pinInput };
+      localStorage.setItem('lvp_account', JSON.stringify(accountProfile));
+      
+      closeAuthModal();
+      renderUserAuthBar();
+      renderDmThreads();
+    };
+
+    window.handleLogout = function() {
+      localStorage.removeItem('lvp_account');
+      accountProfile = null;
+      activeDmTarget = null;
+      currentChannel = 'genel';
+      selectChannel('genel');
+      renderUserAuthBar();
+    };
+
+    function setupRealtimeChat() {
+      if (!db) return;
+      try {
+        const chatRef = ref(db, 'chat_messages');
+        onValue(chatRef, (snapshot) => {
+          const data = snapshot.val();
+          if (data) {
+            const loaded = [];
+            Object.keys(data).forEach(key => {
+              loaded.push({ id: key, ...data[key] });
+            });
+            loaded.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
+            allPublicMessages = loaded;
+            localStorage.setItem('lvp_public_messages', JSON.stringify(allPublicMessages));
+          }
+          if (!activeDmTarget) {
+            renderMessages(allPublicMessages);
+          }
+        }, (error) => {
+          console.warn("RTDB chat notice:", error);
+          if (!activeDmTarget) renderMessages(allPublicMessages);
+        });
+      } catch (e) {
+        console.warn("Setup realtime chat exception:", e);
+      }
+    }
+
+    function setupRealtimeDms() {
+      if (!db) return;
+      try {
+        const dmRef = ref(db, 'direct_messages');
+        onValue(dmRef, (snapshot) => {
+          const data = snapshot.val();
+          if (data) {
+            const loaded = [];
+            Object.keys(data).forEach(key => {
+              loaded.push({ id: key, ...data[key] });
+            });
+            loaded.sort((a, b) => (a.timestamp || 0) - (b.timestamp || 0));
+            allDmMessages = loaded;
+            localStorage.setItem('lvp_dm_messages', JSON.stringify(allDmMessages));
+          }
+          renderDmThreads();
+          if (activeDmTarget) {
+            renderDmMessages();
+          }
+        }, (error) => {
+          console.warn("RTDB DM notice:", error);
+        });
+      } catch (e) {
+        console.warn("Setup realtime DMs exception:", e);
+      }
+    }
+
+    function setupUserProfilesListener() {
+      if (!db) return;
+      try {
+        const usersRef = ref(db, 'portal_users');
+        onValue(usersRef, (snapshot) => {
+          registeredUsers = snapshot.val() || {};
+        }, (error) => {
+          console.warn("User list notice:", error);
+        });
+      } catch (e) {
+        console.warn("User profile listener exception:", e);
+      }
+    }
+
+    function renderMessages(messages) {
+      const container = document.getElementById('chat-messages-container');
+      if (!container) return;
+
+      const filtered = messages.filter(m => (m.channel || 'genel') === currentChannel);
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 text-theme-muted text-xs space-y-2">
+            <i class="fa-solid fa-comments text-3xl opacity-30"></i>
+            <p>Bu kanalda henüz mesaj yok. İlk mesajı sen yaz!</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(msg => {
+        const name = msg.username || 'Anonim';
+        const initial = name.charAt(0).toUpperCase();
+        const text = escapeHtml(msg.text || '');
+        const timeStr = msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Az önce';
+
+        return `
+          <div class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-theme-hover transition-colors">
+            <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-500 to-indigo-500 text-white font-bold text-xs flex items-center justify-center shrink-0">
+              ${initial}
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-theme-text">${escapeHtml(name)}</span>
+                <span class="text-[10px] text-theme-muted">${timeStr}</span>
+              </div>
+              <p class="text-xs text-theme-text mt-1 break-words leading-relaxed">${text}</p>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      container.scrollTop = container.scrollHeight;
+    }
+
+    function renderDmMessages() {
+      const container = document.getElementById('chat-messages-container');
+      if (!container || !activeDmTarget || !accountProfile) return;
+
+      const myUser = accountProfile.username.toLowerCase();
+      const targetUser = activeDmTarget.toLowerCase();
+
+      const filtered = allDmMessages.filter(m => {
+        const from = (m.from || '').toLowerCase();
+        const to = (m.to || '').toLowerCase();
+        return (from === myUser && to === targetUser) || (from === targetUser && to === myUser);
+      });
+
+      if (filtered.length === 0) {
+        container.innerHTML = `
+          <div class="text-center py-12 text-theme-muted text-xs space-y-2">
+            <i class="fa-solid fa-paper-plane text-3xl opacity-30"></i>
+            <p><strong class="text-theme-text">${escapeHtml(activeDmTarget)}</strong> ile ilk özel mesajını yaz!</p>
+          </div>
+        `;
+        return;
+      }
+
+      container.innerHTML = filtered.map(msg => {
+        const isMe = (msg.from || '').toLowerCase() === myUser;
+        const name = msg.from || 'Kullanıcı';
+        const text = escapeHtml(msg.text || '');
+        const timeStr = msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Az önce';
+
+        return `
+          <div class="flex items-start gap-3 p-2.5 rounded-xl ${isMe ? 'bg-purple-500/10 border border-purple-500/20' : 'hover:bg-theme-hover'} transition-colors">
+            <div class="w-8 h-8 rounded-lg ${isMe ? 'bg-purple-600' : 'bg-blue-600'} text-white font-bold text-xs flex items-center justify-center shrink-0">
+              ${name.charAt(0).toUpperCase()}
+            </div>
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center gap-2">
+                <span class="text-xs font-bold text-theme-text">${escapeHtml(name)} ${isMe ? '(Siz)' : ''}</span>
+                <span class="text-[10px] text-theme-muted">${timeStr}</span>
+              </div>
+              <p class="text-xs text-theme-text mt-1 break-words leading-relaxed">${text}</p>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      container.scrollTop = container.scrollHeight;
+    }
+
+    window.handleSendChatMessage = async function(e) {
+      if (e) {
+        e.preventDefault();
+        e.stopPropagation();
+      }
+      
+      const input = document.getElementById('chat-input-message');
+      if (!input) return false;
+      const text = input.value.trim();
+      if (!text) return false;
+
+      if (activeDmTarget) {
+        if (!accountProfile) {
+          openAuthModal();
+          return false;
+        }
+
+        input.value = '';
+        const newDmObj = {
+          id: 'dm_' + Date.now(),
+          from: accountProfile.username,
+          to: activeDmTarget,
+          text: text,
+          timestamp: Date.now()
+        };
+
+        allDmMessages.push(newDmObj);
+        localStorage.setItem('lvp_dm_messages', JSON.stringify(allDmMessages));
+        renderDmMessages();
+        renderDmThreads();
+
+        try {
+          if (db) {
+            const dmRef = ref(db, 'direct_messages');
+            await push(dmRef, newDmObj);
+          }
+        } catch (err) {
+          console.warn("Realtime DB fallback used for DM:", err);
+        }
+        return false;
+      }
+
+      const username = accountProfile ? accountProfile.username : 'Anonim Oyuncu';
+      input.value = '';
+
+      const newMsgObj = {
+        id: 'msg_' + Date.now(),
+        username: username,
+        text: text,
+        channel: currentChannel || 'genel',
+        timestamp: Date.now()
+      };
+
+      allPublicMessages.push(newMsgObj);
+      localStorage.setItem('lvp_public_messages', JSON.stringify(allPublicMessages));
+      renderMessages(allPublicMessages);
+
+      try {
+        if (db) {
+          const chatRef = ref(db, 'chat_messages');
+          await push(chatRef, newMsgObj);
+        }
+      } catch (err) {
+        console.warn("Realtime DB fallback used for chat:", err);
+      }
+
+      return false;
+    };
+
+    function escapeHtml(str) {
+      return (str || '').replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+    }
+
+    initAuth();
+  </script>
+
+  <script>
+    function switchTab(tabId) {
+      document.querySelectorAll('.page-view').forEach(page => {
+        page.classList.add('hidden');
+      });
+
+      document.querySelectorAll('.nav-tab').forEach(btn => {
+        btn.classList.remove('text-theme-text', 'bg-theme-card');
+        btn.classList.add('text-theme-muted');
+      });
+
+      const selectedPage = document.getElementById(`page-${tabId}`);
+      if (selectedPage) selectedPage.classList.remove('hidden');
+
+      const activeBtn = document.getElementById(`tab-btn-${tabId}`);
+      if (activeBtn) {
+        activeBtn.classList.add('text-theme-text');
+        activeBtn.classList.remove('text-theme-muted');
+      }
+
+      if (tabId === 'chat' && typeof window.refreshChatUI === 'function') {
+        window.refreshChatUI();
+      }
+
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function setTheme(themeName) {
+      document.documentElement.setAttribute('data-theme', themeName);
+      localStorage.setItem('lvp_theme', themeName);
+    }
+
+    function toggleMobileMenu() {
+      const menu = document.getElementById('mobile-menu');
+      menu.classList.toggle('hidden');
+    }
+
+    function updateMcColorPreview() {
+      const input = document.getElementById('mc-text-input').value;
+      const output = document.getElementById('mc-text-output');
+      
+      let formatted = input
+        .replace(/&c/g, '<span style="color: #ff5555;">')
+        .replace(/&a/g, '<span style="color: #55ff55;">')
+        .replace(/&b/g, '<span style="color: #55ffff;">')
+        .replace(/&e/g, '<span style="color: #ffff55;">')
+        .replace(/&d/g, '<span style="color: #ff55ff;">')
+        .replace(/&f/g, '<span style="color: #ffffff;">')
+        .replace(/&0/g, '<span style="color: #000000;">');
+
+      output.innerHTML = formatted || '<span class="text-zinc-600">Önizleme burada görünecek...</span>';
+    }
+
+    function insertColorCode(code) {
+      const input = document.getElementById('mc-text-input');
+      input.value += code;
+      updateMcColorPreview();
+    }
+
+    function generateMcCommand() {
+      const item = document.getElementById('cmd-item').value;
+      const amount = document.getElementById('cmd-amount').value || 1;
+      const cmdOutput = document.getElementById('cmd-output');
+
+      cmdOutput.value = `/give @p minecraft:${item} ${amount}`;
+    }
+
+    function copyCommand() {
+      const cmdOutput = document.getElementById('cmd-output');
+      cmdOutput.select();
+      document.execCommand('copy');
+    }
+
+    let gameLoopId = null;
+    let runnerY = 140;
+    let isJumping = false;
+    let jumpVelocity = 0;
+    let obstacleX = 400;
+    let score = 0;
+
+    function openDemoGameModal(title) {
+      document.getElementById('modal-game-title').innerText = title;
+      document.getElementById('game-modal').classList.remove('hidden');
+      startMiniGame();
+    }
+
+    function closeGameModal() {
+      document.getElementById('game-modal').classList.add('hidden');
+      if (gameLoopId) cancelAnimationFrame(gameLoopId);
+    }
+
+    function startMiniGame() {
+      const canvas = document.getElementById('mini-game-canvas');
+      const ctx = canvas.getContext('2d');
+      runnerY = 140;
+      jumpVelocity = 0;
+      isJumping = false;
+      obstacleX = 400;
+      score = 0;
+
+      function jump() {
+        if (!isJumping) {
+          isJumping = true;
+          jumpVelocity = -10;
+        }
+      }
+
+      window.onkeydown = (e) => {
+        if (e.code === 'Space') jump();
+      };
+      canvas.onclick = jump;
+
+      function update() {
+        if (isJumping) {
+          runnerY += jumpVelocity;
+          jumpVelocity += 0.6;
+          if (runnerY >= 140) {
+            runnerY = 140;
+            isJumping = false;
+          }
+        }
+
+        obstacleX -= 4;
+        if (obstacleX < -20) {
+          obstacleX = 400;
+          score += 10;
+        }
+
+        ctx.fillStyle = '#0f172a';
+        ctx.fillRect(0, 0, 400, 200);
+
+        ctx.fillStyle = '#334155';
+        ctx.fillRect(0, 170, 400, 30);
+
+        ctx.fillStyle = '#a855f7';
+        ctx.fillRect(50, runnerY, 25, 30);
+
+        ctx.fillStyle = '#ef4444';
+        ctx.fillRect(obstacleX, 145, 20, 25);
+
+        ctx.fillStyle = '#ffffff';
+        ctx.font = '12px sans-serif';
+        ctx.fillText('Skor: ' + score, 15, 25);
+
+        gameLoopId = requestAnimationFrame(update);
+      }
+
+      if (gameLoopId) cancelAnimationFrame(gameLoopId);
+      update();
+    }
+
+    window.onload = function() {
+      updateMcColorPreview();
+      generateMcCommand();
+      
+      const savedTheme = localStorage.getItem('lvp_theme') || 'mor';
+      setTheme(savedTheme);
+    };
+  </script>
+
 </body>
 </html>
+```
