@@ -523,9 +523,9 @@
           </div>
         </div>
 
-        <div class="lg:col-span-3 theme-card rounded-2xl p-4 flex flex-col justify-between h-full">
+        <div class="lg:col-span-3 theme-card rounded-2xl p-4 flex flex-col min-h-0 h-full">
           
-          <div class="pb-3 border-b border-theme-border space-y-2">
+          <div class="pb-3 border-b border-theme-border space-y-2 shrink-0">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2">
                 <span id="active-channel-icon" class="text-purple-400 text-base"><i class="fa-solid fa-hashtag"></i></span>
@@ -543,10 +543,10 @@
             </div>
           </div>
 
-          <div id="chat-messages-container" class="flex-1 overflow-y-auto space-y-3 pr-2 my-2">
+          <div id="chat-messages-container" class="flex-1 min-h-0 overflow-y-auto space-y-1 pr-2 my-2">
           </div>
 
-          <form onsubmit="handleSendChatMessage(event); return false;" class="pt-3 border-t border-theme-border flex items-center gap-2">
+          <form onsubmit="handleSendChatMessage(event); return false;" class="pt-3 border-t border-theme-border flex items-center gap-2 shrink-0">
             <input type="text" id="chat-input-message" placeholder="Mesajınızı yazın..." required autocomplete="off" class="flex-1 px-4 py-3 rounded-xl bg-theme-hover border border-theme-border text-theme-text text-sm focus:outline-none focus:border-purple-500">
             <button type="submit" class="accent-btn px-5 py-3 rounded-xl font-bold text-sm flex items-center gap-2">
               <span>Gönder</span>
@@ -1197,30 +1197,52 @@
         return;
       }
 
-      container.innerHTML = filtered.map(msg => {
+      let html = '';
+      let prevUser = null;
+
+      filtered.forEach(msg => {
         const name = msg.username || 'Anonim';
         const initial = name.charAt(0).toUpperCase();
         const text = escapeHtml(msg.text || '');
         const timeStr = msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Az önce';
-        
-        const avatarHtml = msg.avatarUrl 
-          ? `<img src="${msg.avatarUrl}" class="w-8 h-8 rounded-lg object-cover shrink-0">`
-          : `<div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-500 to-indigo-500 text-white font-bold text-xs flex items-center justify-center shrink-0">${initial}</div>`;
+        const isSameUser = prevUser === name.toLowerCase();
 
-        return `
-          <div class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-theme-hover transition-colors">
-            ${avatarHtml}
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center gap-2">
-                <span class="text-xs font-bold text-theme-text">${escapeHtml(name)}</span>
-                <span class="text-[10px] text-theme-muted">${timeStr}</span>
+        if (isSameUser) {
+          // Aynı kişinin grup mesajı (Yer tasarruflu üst tarafa yapışık mesaj)
+          html += `
+            <div class="flex items-start gap-3 px-2.5 py-0.5 rounded-xl hover:bg-theme-hover transition-colors -mt-1 group">
+              <div class="w-8 shrink-0 flex justify-end">
+                <span class="text-[9px] text-theme-muted hidden group-hover:inline opacity-60 self-center">${timeStr}</span>
               </div>
-              <p class="text-xs text-theme-text mt-1 break-words leading-relaxed">${text}</p>
+              <div class="flex-1 min-w-0">
+                <p class="text-xs text-theme-text break-words leading-relaxed">${text}</p>
+              </div>
             </div>
-          </div>
-        `;
-      }).join('');
+          `;
+        } else {
+          // Yeni gönderici mesajı (İsim ve Avatar içerir)
+          const avatarHtml = msg.avatarUrl 
+            ? `<img src="${msg.avatarUrl}" class="w-8 h-8 rounded-lg object-cover shrink-0">`
+            : `<div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-500 to-indigo-500 text-white font-bold text-xs flex items-center justify-center shrink-0">${initial}</div>`;
 
+          html += `
+            <div class="flex items-start gap-3 p-2.5 pt-3 rounded-xl hover:bg-theme-hover transition-colors">
+              ${avatarHtml}
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-bold text-theme-text">${escapeHtml(name)}</span>
+                  <span class="text-[10px] text-theme-muted">${timeStr}</span>
+                </div>
+                <p class="text-xs text-theme-text mt-1 break-words leading-relaxed">${text}</p>
+              </div>
+            </div>
+          `;
+        }
+
+        prevUser = name.toLowerCase();
+      });
+
+      container.innerHTML = html;
       container.scrollTop = container.scrollHeight;
     }
 
@@ -1247,30 +1269,53 @@
         return;
       }
 
-      container.innerHTML = filtered.map(msg => {
-        const isMe = (msg.from || '').toLowerCase() === myUser;
+      let html = '';
+      let prevUser = null;
+
+      filtered.forEach(msg => {
+        const sender = (msg.from || '').toLowerCase();
+        const isMe = sender === myUser;
         const name = msg.from || 'Kullanıcı';
         const text = escapeHtml(msg.text || '');
         const timeStr = msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Az önce';
+        const isSameUser = prevUser === sender;
 
-        const avatarHtml = msg.avatarUrl 
-          ? `<img src="${msg.avatarUrl}" class="w-8 h-8 rounded-lg object-cover shrink-0">`
-          : `<div class="w-8 h-8 rounded-lg ${isMe ? 'bg-purple-600' : 'bg-blue-600'} text-white font-bold text-xs flex items-center justify-center shrink-0">${name.charAt(0).toUpperCase()}</div>`;
-
-        return `
-          <div class="flex items-start gap-3 p-2.5 rounded-xl ${isMe ? 'bg-purple-500/10 border border-purple-500/20' : 'hover:bg-theme-hover'} transition-colors">
-            ${avatarHtml}
-            <div class="flex-1 min-w-0">
-              <div class="flex items-center gap-2">
-                <span class="text-xs font-bold text-theme-text">${escapeHtml(name)} ${isMe ? '(Siz)' : ''}</span>
-                <span class="text-[10px] text-theme-muted">${timeStr}</span>
+        if (isSameUser) {
+          // Ardışık DM mesajı
+          html += `
+            <div class="flex items-start gap-3 px-2.5 py-0.5 rounded-xl ${isMe ? 'bg-purple-500/10 border-x border-purple-500/20' : 'hover:bg-theme-hover'} transition-colors -mt-1 group">
+              <div class="w-8 shrink-0 flex justify-end">
+                <span class="text-[9px] text-theme-muted hidden group-hover:inline opacity-60 self-center">${timeStr}</span>
               </div>
-              <p class="text-xs text-theme-text mt-1 break-words leading-relaxed">${text}</p>
+              <div class="flex-1 min-w-0">
+                <p class="text-xs text-theme-text break-words leading-relaxed">${text}</p>
+              </div>
             </div>
-          </div>
-        `;
-      }).join('');
+          `;
+        } else {
+          // İsim ve Avatar içeren ilk DM mesajı
+          const avatarHtml = msg.avatarUrl 
+            ? `<img src="${msg.avatarUrl}" class="w-8 h-8 rounded-lg object-cover shrink-0">`
+            : `<div class="w-8 h-8 rounded-lg ${isMe ? 'bg-purple-600' : 'bg-blue-600'} text-white font-bold text-xs flex items-center justify-center shrink-0">${name.charAt(0).toUpperCase()}</div>`;
 
+          html += `
+            <div class="flex items-start gap-3 p-2.5 pt-3 rounded-xl ${isMe ? 'bg-purple-500/10 border border-purple-500/20' : 'hover:bg-theme-hover'} transition-colors">
+              ${avatarHtml}
+              <div class="flex-1 min-w-0">
+                <div class="flex items-center gap-2">
+                  <span class="text-xs font-bold text-theme-text">${escapeHtml(name)} ${isMe ? '(Siz)' : ''}</span>
+                  <span class="text-[10px] text-theme-muted">${timeStr}</span>
+                </div>
+                <p class="text-xs text-theme-text mt-1 break-words leading-relaxed">${text}</p>
+              </div>
+            </div>
+          `;
+        }
+
+        prevUser = sender;
+      });
+
+      container.innerHTML = html;
       container.scrollTop = container.scrollHeight;
     }
 
