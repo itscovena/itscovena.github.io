@@ -183,23 +183,41 @@
           </button>
         </nav>
 
-        <!-- Dynamic Theme Selector -->
+        <!-- Right Menu Area (Theme Selector & User Profile) -->
         <div class="flex items-center gap-3">
-          <div class="relative inline-block text-left">
-            <div class="flex items-center gap-1 bg-theme-hover p-1 rounded-xl border border-theme-border">
-              <button onclick="setTheme('mor')" title="Mor Tema" class="w-7 h-7 rounded-lg bg-purple-600 hover:scale-110 transition-transform flex items-center justify-center text-xs text-white shadow">
-                <i class="fa-solid fa-bolt text-[10px]"></i>
+          
+          <!-- Tema Seçici Popup Butonu -->
+          <div class="relative">
+            <button id="theme-popup-btn" onclick="toggleThemeModal()" title="Tema Değiştir" class="flex items-center justify-center gap-2 px-3 py-2 rounded-xl bg-theme-hover border border-theme-border text-theme-text hover:border-purple-500 transition-all text-xs font-semibold">
+              <span id="current-theme-icon"><i class="fa-solid fa-moon text-purple-400"></i></span>
+              <span id="current-theme-name" class="hidden sm:inline">Siyah</span>
+              <i class="fa-solid fa-chevron-down text-[10px] text-theme-muted"></i>
+            </button>
+
+            <!-- Tema Popup Menü -->
+            <div id="theme-modal" class="hidden absolute right-0 mt-2 w-44 rounded-2xl bg-theme-card border border-theme-border shadow-2xl p-2 z-50 space-y-1">
+              <button onclick="selectTheme('mor')" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold hover:bg-theme-hover text-theme-text transition-colors">
+                <span class="w-5 h-5 rounded-lg bg-purple-600 flex items-center justify-center text-[10px] text-white"><i class="fa-solid fa-bolt"></i></span>
+                <span>Mor Tema</span>
               </button>
-              <button onclick="setTheme('mavi')" title="Mavi Tema" class="w-7 h-7 rounded-lg bg-blue-600 hover:scale-110 transition-transform flex items-center justify-center text-xs text-white shadow">
-                <i class="fa-solid fa-water text-[10px]"></i>
+              <button onclick="selectTheme('mavi')" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold hover:bg-theme-hover text-theme-text transition-colors">
+                <span class="w-5 h-5 rounded-lg bg-blue-600 flex items-center justify-center text-[10px] text-white"><i class="fa-solid fa-water"></i></span>
+                <span>Mavi Tema</span>
               </button>
-              <button onclick="setTheme('siyah')" title="Siyah Tema" class="w-7 h-7 rounded-lg bg-zinc-900 border border-zinc-700 hover:scale-110 transition-transform flex items-center justify-center text-xs text-white shadow">
-                <i class="fa-solid fa-moon text-[10px]"></i>
+              <button onclick="selectTheme('siyah')" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold hover:bg-theme-hover text-theme-text transition-colors">
+                <span class="w-5 h-5 rounded-lg bg-zinc-900 border border-zinc-700 flex items-center justify-center text-[10px] text-white"><i class="fa-solid fa-moon"></i></span>
+                <span>Siyah Tema</span>
               </button>
-              <button onclick="setTheme('beyaz')" title="Beyaz Tema" class="w-7 h-7 rounded-lg bg-slate-100 border border-slate-300 hover:scale-110 transition-transform flex items-center justify-center text-xs text-slate-800 shadow">
-                <i class="fa-solid fa-sun text-[10px]"></i>
+              <button onclick="selectTheme('beyaz')" class="w-full flex items-center gap-2.5 px-3 py-2 rounded-xl text-xs font-semibold hover:bg-theme-hover text-theme-text transition-colors">
+                <span class="w-5 h-5 rounded-lg bg-slate-100 border border-slate-300 flex items-center justify-center text-[10px] text-slate-800"><i class="fa-solid fa-sun"></i></span>
+                <span>Beyaz Tema</span>
               </button>
             </div>
+          </div>
+
+          <!-- Kullanıcı Alanı (Giriş Yapılmadıysa / Yapıldıysa) -->
+          <div id="header-user-area">
+            <!-- JS Tarafından Dinamik Doldurulur -->
           </div>
 
           <!-- Mobile Menu Toggle Button -->
@@ -346,7 +364,6 @@
             <div class="pt-2 flex items-center justify-between">
               <span class="text-xs text-theme-muted font-medium"><i class="fa-solid fa-gamepad text-purple-400"></i> PC Oyunu</span>
               
-              <!-- İndirme Butonu (Aşağıdaki href kısmını kendi indirme linkinle değiştirebilirsin) -->
               <a href="#" download class="accent-btn px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-1.5 cursor-pointer">
                 <i class="fa-solid fa-download"></i> Oyunu İndir
               </a>
@@ -395,7 +412,6 @@
             <input type="text" id="mc-text-input" value="&amp;aMerhaba &amp;bLvp3016 &amp;cMinecraft!" oninput="updateMcColorPreview()" class="w-full px-4 py-2.5 rounded-xl bg-theme-hover border border-theme-border text-theme-text focus:outline-none focus:border-purple-500 text-sm">
             
             <div class="p-4 rounded-xl bg-black border border-zinc-800 font-mono text-sm min-h-[60px] flex items-center" id="mc-text-output">
-              <!-- Rendered colored text preview -->
             </div>
 
             <div class="flex flex-wrap gap-1.5 text-xs pt-2">
@@ -494,7 +510,6 @@
                 </button>
               </div>
               <div id="dm-threads-list" class="space-y-1 text-xs">
-                <!-- DM Threads list -->
                 <p class="text-[11px] text-theme-muted px-2 py-1">Henüz özel mesajınız yok.</p>
               </div>
             </div>
@@ -525,12 +540,10 @@
             </div>
 
             <div id="chat-tabs-bar" class="flex items-center gap-2 overflow-x-auto pt-1 pb-1 text-xs">
-              <!-- Rendered via JS -->
             </div>
           </div>
 
           <div id="chat-messages-container" class="flex-1 overflow-y-auto space-y-3 pr-2 my-2">
-            <!-- Messages render area -->
           </div>
 
           <form onsubmit="handleSendChatMessage(event); return false;" class="pt-3 border-t border-theme-border flex items-center gap-2">
@@ -547,7 +560,7 @@
 
     </section>
 
-    <!-- AUTH MODAL -->
+    <!-- AUTH MODAL (Giriş / Kayıt Ol) -->
     <div id="auth-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
       <div class="theme-card max-w-md w-full rounded-3xl p-6 space-y-5 border border-theme-border relative">
         <button onclick="closeAuthModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-theme-hover text-theme-text flex items-center justify-center">
@@ -555,8 +568,8 @@
         </button>
         
         <div>
-          <h3 class="text-xl font-bold text-theme-text" id="auth-modal-title">Hesap Oluştur / Giriş Yap</h3>
-          <p class="text-xs text-theme-muted mt-1">Özel mesaj (DM) göndermek için bir kullanıcı adı ve PIN belirleyin.</p>
+          <h3 class="text-xl font-bold text-theme-text" id="auth-modal-title">Kayıt Ol / Giriş Yap</h3>
+          <p class="text-xs text-theme-muted mt-1">Sohbet etmek ve profil oluşturmak için bilgilerinizi girin.</p>
         </div>
 
         <form onsubmit="handleAuthSubmit(event)" class="space-y-4">
@@ -565,12 +578,67 @@
             <input type="text" id="auth-username" placeholder="Örn: Ahmet3016" required minlength="3" maxlength="20" class="w-full px-4 py-2.5 rounded-xl bg-theme-hover border border-theme-border text-theme-text text-sm focus:outline-none focus:border-purple-500">
           </div>
           <div>
-            <label class="block text-xs font-semibold text-theme-muted mb-1">4 Haneli Güvenlik PIN Kodu:</label>
-            <input type="password" id="auth-pin" placeholder="****" maxlength="6" required class="w-full px-4 py-2.5 rounded-xl bg-theme-hover border border-theme-border text-theme-text text-sm focus:outline-none focus:border-purple-500">
+            <label class="block text-xs font-semibold text-theme-muted mb-1"> Güvenlik PIN Kodu (Şifre):</label>
+            <input type="password" id="auth-pin" placeholder="****" maxlength="10" required class="w-full px-4 py-2.5 rounded-xl bg-theme-hover border border-theme-border text-theme-text text-sm focus:outline-none focus:border-purple-500">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-theme-muted mb-1">Profil Resmi URL (İsteğe Bağlı):</label>
+            <input type="url" id="auth-avatar" placeholder="https://ornek.com/resim.png" class="w-full px-4 py-2.5 rounded-xl bg-theme-hover border border-theme-border text-theme-text text-sm focus:outline-none focus:border-purple-500">
           </div>
           <div id="auth-error-msg" class="text-xs text-red-400 hidden font-medium"></div>
 
           <button type="submit" class="accent-btn w-full py-3 rounded-xl font-bold text-sm">Giriş Yap / Kaydol</button>
+        </form>
+      </div>
+    </div>
+
+    <!-- PROFILE MANAGEMENT MODAL (Profil Sekmesi Popup) -->
+    <div id="profile-modal" class="fixed inset-0 z-50 hidden bg-black/80 backdrop-blur-sm flex items-center justify-center p-4">
+      <div class="theme-card max-w-md w-full rounded-3xl p-6 space-y-5 border border-theme-border relative">
+        <button onclick="closeProfileModal()" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-theme-hover text-theme-text flex items-center justify-center">
+          <i class="fa-solid fa-xmark"></i>
+        </button>
+        
+        <div class="text-center">
+          <div class="relative w-20 h-20 mx-auto mb-3">
+            <img id="edit-avatar-preview" src="" alt="Avatar" class="w-20 h-20 rounded-2xl object-cover border-2 border-purple-500 hidden">
+            <div id="edit-avatar-fallback" class="w-20 h-20 rounded-2xl bg-purple-600 text-white font-extrabold text-2xl flex items-center justify-center border-2 border-purple-500"></div>
+          </div>
+          <h3 class="text-xl font-bold text-theme-text">Hesap Profili Yönetimi</h3>
+          <p class="text-xs text-theme-muted">Kullanıcı bilgilerinizi buradan güncelleyebilirsiniz.</p>
+        </div>
+
+        <form onsubmit="handleProfileUpdate(event)" class="space-y-4">
+          <div>
+            <label class="block text-xs font-semibold text-theme-muted mb-1">Kullanıcı Adı:</label>
+            <input type="text" id="edit-username" required minlength="3" maxlength="20" class="w-full px-4 py-2.5 rounded-xl bg-theme-hover border border-theme-border text-theme-text text-sm focus:outline-none focus:border-purple-500">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-theme-muted mb-1">Güvenlik PIN / Şifre:</label>
+            <input type="password" id="edit-pin" required maxlength="10" class="w-full px-4 py-2.5 rounded-xl bg-theme-hover border border-theme-border text-theme-text text-sm focus:outline-none focus:border-purple-500">
+          </div>
+          <div>
+            <label class="block text-xs font-semibold text-theme-muted mb-1">Profil Resmi (URL Adresi):</label>
+            <input type="url" id="edit-avatar-url" oninput="updateAvatarPreview()" placeholder="https://..." class="w-full px-4 py-2.5 rounded-xl bg-theme-hover border border-theme-border text-theme-text text-sm focus:outline-none focus:border-purple-500">
+          </div>
+
+          <!-- Hazır Avatarlar -->
+          <div>
+            <label class="block text-xs font-semibold text-theme-muted mb-2">Veya Hazır Avatar Seçin:</label>
+            <div class="flex items-center gap-2 justify-center">
+              <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Lvp1" onclick="selectPresetAvatar(this.src)" class="w-10 h-10 rounded-xl bg-theme-hover p-1 cursor-pointer border hover:border-purple-500">
+              <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Lvp2" onclick="selectPresetAvatar(this.src)" class="w-10 h-10 rounded-xl bg-theme-hover p-1 cursor-pointer border hover:border-purple-500">
+              <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Lvp3" onclick="selectPresetAvatar(this.src)" class="w-10 h-10 rounded-xl bg-theme-hover p-1 cursor-pointer border hover:border-purple-500">
+              <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Lvp4" onclick="selectPresetAvatar(this.src)" class="w-10 h-10 rounded-xl bg-theme-hover p-1 cursor-pointer border hover:border-purple-500">
+            </div>
+          </div>
+
+          <div id="edit-profile-msg" class="text-xs text-emerald-400 hidden font-medium text-center"></div>
+
+          <div class="flex items-center gap-2 pt-2">
+            <button type="submit" class="accent-btn flex-1 py-3 rounded-xl font-bold text-sm">Kaydet</button>
+            <button type="button" onclick="handleLogout()" class="px-4 py-3 rounded-xl bg-red-500/20 text-red-400 hover:bg-red-500 hover:text-white transition-all text-sm font-bold">Çıkış Yap</button>
+          </div>
         </form>
       </div>
     </div>
@@ -817,6 +885,7 @@
     };
 
     function initAuth() {
+      renderUserHeaderArea();
       renderUserAuthBar();
       window.refreshChatUI();
 
@@ -833,16 +902,45 @@
       setupUserProfilesListener();
     }
 
+    // SAĞ ÜST KULLANICI ALANINI RENDER EDER
+    function renderUserHeaderArea() {
+      const headerArea = document.getElementById('header-user-area');
+      if (!headerArea) return;
+
+      if (accountProfile) {
+        const avatarHtml = accountProfile.avatarUrl 
+          ? `<img src="${accountProfile.avatarUrl}" alt="Avatar" class="w-8 h-8 rounded-xl object-cover border border-purple-500">`
+          : `<div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-purple-600 to-indigo-500 text-white font-extrabold text-xs flex items-center justify-center border border-purple-400">${accountProfile.username.charAt(0).toUpperCase()}</div>`;
+
+        headerArea.innerHTML = `
+          <button onclick="openProfileModal()" title="Profil Profil Sekmesini Aç" class="flex items-center gap-2.5 p-1.5 pr-3 rounded-2xl bg-theme-hover border border-theme-border hover:border-purple-500 transition-all cursor-pointer">
+            ${avatarHtml}
+            <span class="text-xs font-bold text-theme-text max-w-[100px] truncate">${escapeHtml(accountProfile.username)}</span>
+          </button>
+        `;
+      } else {
+        headerArea.innerHTML = `
+          <button onclick="openAuthModal()" class="accent-btn px-4 py-2 rounded-xl text-xs font-bold flex items-center gap-2">
+            <i class="fa-solid fa-user-plus text-[10px]"></i>
+            <span class="hidden sm:inline">Kayıt Ol / Giriş Yap</span>
+            <span class="sm:hidden">Giriş</span>
+          </button>
+        `;
+      }
+    }
+
     function renderUserAuthBar() {
       const bar = document.getElementById('user-auth-bar');
       if (!bar) return;
 
       if (accountProfile) {
+        const avatarHtml = accountProfile.avatarUrl 
+          ? `<img src="${accountProfile.avatarUrl}" alt="Avatar" class="w-7 h-7 rounded-lg object-cover">`
+          : `<div class="w-7 h-7 rounded-lg bg-purple-600 text-white font-extrabold text-xs flex items-center justify-center">${accountProfile.username.charAt(0).toUpperCase()}</div>`;
+
         bar.innerHTML = `
-          <div class="flex items-center gap-2">
-            <div class="w-7 h-7 rounded-lg bg-purple-600 text-white font-extrabold text-xs flex items-center justify-center">
-              ${accountProfile.username.charAt(0).toUpperCase()}
-            </div>
+          <div class="flex items-center gap-2 cursor-pointer" onclick="openProfileModal()">
+            ${avatarHtml}
             <span class="text-xs font-bold text-theme-text">${escapeHtml(accountProfile.username)}</span>
             <span class="text-[10px] px-1.5 py-0.5 rounded bg-emerald-500/20 text-emerald-400 font-semibold">Giriş Yapıldı</span>
           </div>
@@ -867,6 +965,89 @@
     window.closeAuthModal = function() {
       document.getElementById('auth-modal').classList.add('hidden');
     };
+
+    window.openProfileModal = function() {
+      if (!accountProfile) return;
+      document.getElementById('edit-username').value = accountProfile.username || '';
+      document.getElementById('edit-pin').value = accountProfile.pin || '';
+      document.getElementById('edit-avatar-url').value = accountProfile.avatarUrl || '';
+      
+      updateAvatarPreview();
+      document.getElementById('profile-modal').classList.remove('hidden');
+    };
+
+    window.closeProfileModal = function() {
+      document.getElementById('profile-modal').classList.add('hidden');
+      const msg = document.getElementById('edit-profile-msg');
+      if (msg) msg.classList.add('hidden');
+    };
+
+    window.updateAvatarPreview = function() {
+      const url = document.getElementById('edit-avatar-url').value.trim();
+      const img = document.getElementById('edit-avatar-preview');
+      const fallback = document.getElementById('edit-avatar-fallback');
+      const uname = document.getElementById('edit-username').value.trim() || 'U';
+
+      if (url) {
+        img.src = url;
+        img.classList.remove('hidden');
+        fallback.classList.add('hidden');
+      } else {
+        img.classList.add('hidden');
+        fallback.innerText = uname.charAt(0).toUpperCase();
+        fallback.classList.remove('hidden');
+      }
+    };
+
+    window.selectPresetAvatar = function(url) {
+      document.getElementById('edit-avatar-url').value = url;
+      updateAvatarPreview();
+    };
+
+    window.handleProfileUpdate = async function(e) {
+      if (e) e.preventDefault();
+      const newUsername = document.getElementById('edit-username').value.trim();
+      const newPin = document.getElementById('edit-pin').value.trim();
+      const newAvatar = document.getElementById('edit-avatar-url').value.trim();
+      const msg = document.getElementById('edit-profile-msg');
+
+      if (!newUsername || !newPin) return;
+
+      const lowerName = newUsername.toLowerCase();
+      
+      accountProfile = {
+        username: newUsername,
+        pin: newPin,
+        avatarUrl: newAvatar
+      };
+
+      localStorage.setItem('lvp_account', JSON.stringify(accountProfile));
+
+      try {
+        if (db) {
+          const userRef = ref(db, `portal_users/${lowerName}`);
+          await set(userRef, {
+            username: newUsername,
+            usernameLower: lowerName,
+            pin: newPin,
+            avatarUrl: newAvatar,
+            updatedAt: Date.now()
+          });
+        }
+      } catch (err) {
+        console.warn("RTDB Profile Update warning:", err);
+      }
+
+      renderUserHeaderArea();
+      renderUserAuthBar();
+      
+      if (msg) {
+        msg.innerText = "Profil bilgileriniz güncellendi!";
+        msg.classList.remove('hidden');
+        setTimeout(() => closeProfileModal(), 1200);
+      }
+    };
+
     window.openNewDmModal = function() {
       if (!accountProfile) {
         openAuthModal();
@@ -882,6 +1063,7 @@
       if (e) e.preventDefault();
       const usernameInput = document.getElementById('auth-username').value.trim();
       const pinInput = document.getElementById('auth-pin').value.trim();
+      const avatarInput = document.getElementById('auth-avatar').value.trim();
       const errBox = document.getElementById('auth-error-msg');
 
       if (!usernameInput || !pinInput) return;
@@ -890,7 +1072,7 @@
       
       if (registeredUsers[lowerName]) {
         if (registeredUsers[lowerName].pin !== pinInput) {
-          errBox.innerText = "Bu kullanıcı adı alınmış ve PIN hatalı!";
+          errBox.innerText = "Bu kullanıcı adı alınmış ve PIN/Şifre hatalı!";
           errBox.classList.remove('hidden');
           return;
         }
@@ -902,6 +1084,7 @@
               username: usernameInput,
               usernameLower: lowerName,
               pin: pinInput,
+              avatarUrl: avatarInput,
               createdAt: Date.now()
             });
           }
@@ -910,10 +1093,11 @@
         }
       }
 
-      accountProfile = { username: usernameInput, pin: pinInput };
+      accountProfile = { username: usernameInput, pin: pinInput, avatarUrl: avatarInput };
       localStorage.setItem('lvp_account', JSON.stringify(accountProfile));
       
       closeAuthModal();
+      renderUserHeaderArea();
       renderUserAuthBar();
       renderDmThreads();
     };
@@ -923,7 +1107,9 @@
       accountProfile = null;
       activeDmTarget = null;
       currentChannel = 'genel';
+      closeProfileModal();
       selectChannel('genel');
+      renderUserHeaderArea();
       renderUserAuthBar();
     };
 
@@ -1016,12 +1202,14 @@
         const initial = name.charAt(0).toUpperCase();
         const text = escapeHtml(msg.text || '');
         const timeStr = msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Az önce';
+        
+        const avatarHtml = msg.avatarUrl 
+          ? `<img src="${msg.avatarUrl}" class="w-8 h-8 rounded-lg object-cover shrink-0">`
+          : `<div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-500 to-indigo-500 text-white font-bold text-xs flex items-center justify-center shrink-0">${initial}</div>`;
 
         return `
           <div class="flex items-start gap-3 p-2.5 rounded-xl hover:bg-theme-hover transition-colors">
-            <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-purple-500 to-indigo-500 text-white font-bold text-xs flex items-center justify-center shrink-0">
-              ${initial}
-            </div>
+            ${avatarHtml}
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-2">
                 <span class="text-xs font-bold text-theme-text">${escapeHtml(name)}</span>
@@ -1065,11 +1253,13 @@
         const text = escapeHtml(msg.text || '');
         const timeStr = msg.timestamp ? new Date(msg.timestamp).toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}) : 'Az önce';
 
+        const avatarHtml = msg.avatarUrl 
+          ? `<img src="${msg.avatarUrl}" class="w-8 h-8 rounded-lg object-cover shrink-0">`
+          : `<div class="w-8 h-8 rounded-lg ${isMe ? 'bg-purple-600' : 'bg-blue-600'} text-white font-bold text-xs flex items-center justify-center shrink-0">${name.charAt(0).toUpperCase()}</div>`;
+
         return `
           <div class="flex items-start gap-3 p-2.5 rounded-xl ${isMe ? 'bg-purple-500/10 border border-purple-500/20' : 'hover:bg-theme-hover'} transition-colors">
-            <div class="w-8 h-8 rounded-lg ${isMe ? 'bg-purple-600' : 'bg-blue-600'} text-white font-bold text-xs flex items-center justify-center shrink-0">
-              ${name.charAt(0).toUpperCase()}
-            </div>
+            ${avatarHtml}
             <div class="flex-1 min-w-0">
               <div class="flex items-center gap-2">
                 <span class="text-xs font-bold text-theme-text">${escapeHtml(name)} ${isMe ? '(Siz)' : ''}</span>
@@ -1106,6 +1296,7 @@
           id: 'dm_' + Date.now(),
           from: accountProfile.username,
           to: activeDmTarget,
+          avatarUrl: accountProfile.avatarUrl || '',
           text: text,
           timestamp: Date.now()
         };
@@ -1127,11 +1318,13 @@
       }
 
       const username = accountProfile ? accountProfile.username : 'Anonim Oyuncu';
+      const avatarUrl = accountProfile ? (accountProfile.avatarUrl || '') : '';
       input.value = '';
 
       const newMsgObj = {
         id: 'msg_' + Date.now(),
         username: username,
+        avatarUrl: avatarUrl,
         text: text,
         channel: currentChannel || 'genel',
         timestamp: Date.now()
@@ -1161,6 +1354,13 @@
   </script>
 
   <script>
+    const themeDetails = {
+      mor: { icon: '<i class="fa-solid fa-bolt text-purple-400"></i>', name: 'Mor' },
+      mavi: { icon: '<i class="fa-solid fa-water text-blue-400"></i>', name: 'Mavi' },
+      siyah: { icon: '<i class="fa-solid fa-moon text-zinc-300"></i>', name: 'Siyah' },
+      beyaz: { icon: '<i class="fa-solid fa-sun text-amber-500"></i>', name: 'Beyaz' }
+    };
+
     function switchTab(tabId) {
       document.querySelectorAll('.page-view').forEach(page => {
         page.classList.add('hidden');
@@ -1187,10 +1387,38 @@
       window.scrollTo({ top: 0, behavior: 'smooth' });
     }
 
+    function toggleThemeModal() {
+      const modal = document.getElementById('theme-modal');
+      modal.classList.toggle('hidden');
+    }
+
+    function selectTheme(themeName) {
+      setTheme(themeName);
+      toggleThemeModal();
+    }
+
     function setTheme(themeName) {
       document.documentElement.setAttribute('data-theme', themeName);
       localStorage.setItem('lvp_theme', themeName);
+
+      const iconSpan = document.getElementById('current-theme-icon');
+      const nameSpan = document.getElementById('current-theme-name');
+      if (iconSpan && themeDetails[themeName]) {
+        iconSpan.innerHTML = themeDetails[themeName].icon;
+      }
+      if (nameSpan && themeDetails[themeName]) {
+        nameSpan.innerText = themeDetails[themeName].name;
+      }
     }
+
+    // Ekranın herhangi bir yerine tıklandığında tema popup'ını kapat
+    document.addEventListener('click', function(e) {
+      const themeBtn = document.getElementById('theme-popup-btn');
+      const themeModal = document.getElementById('theme-modal');
+      if (themeBtn && themeModal && !themeBtn.contains(e.target) && !themeModal.contains(e.target)) {
+        themeModal.classList.add('hidden');
+      }
+    });
 
     function toggleMobileMenu() {
       const menu = document.getElementById('mobile-menu');
@@ -1236,7 +1464,7 @@
       updateMcColorPreview();
       generateMcCommand();
       
-      const savedTheme = localStorage.getItem('lvp_theme') || 'mor';
+      const savedTheme = localStorage.getItem('lvp_theme') || 'siyah';
       setTheme(savedTheme);
     };
   </script>
